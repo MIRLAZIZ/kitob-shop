@@ -30,101 +30,131 @@
           </button>
         </div>
       </div>
-      <Swiper
-        :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
-        :grid="{ rows: 1, fill: 'row' }"
-        :slides-per-view="6"
-        :space-between="10"
-        :pagination="{ clickable: true }"
-        @swiper="onSwiper"
-      >
-        <SwiperSlide v-for="(item, idx) in props.bookImgs" :key="idx">
-          <div @click="$router.push(`/book/${item.id}`)" class="bookData">
-            <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
-
-            <button
-              :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'"
-            >
-              {{ item.is_bestseller == 1 ? "Bestseller" : "Yangi" }}
-            </button>
-            <div
-              class="likeBox"
-              @click="addFavourite($event, idx, item.id, item.type.book_id)"
-            >
+      
+      <div class="book-carousel-container">
+        <swiper-container 
+          ref="containerRef"
+          :slides-per-view="6"
+          :space-between="10"
+          :pagination="true"
+        
+          :mousewheel="true"
+          :autoplay="{
+            delay: props.swiperDley || 3000,
+            disableOnInteraction: false
+          }"
+          class="book-swiper"
+        >
+          <swiper-slide
+            v-for="(item, idx) in props.bookImgs"
+            :key="idx"
+            class="book-slide"
+          >
+            <div @click="$router.push(`/book/${item.id}`)" class="bookData">
+              <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
+              <button
+                :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'"
+              >
+                {{ item.is_bestseller == 1 ? "Bestseller" : "Yangi" }}
+              </button>
+              <div
+                class="likeBox"
+                @click="addFavourite($event, idx, item.id, item.type.book_id)"
+              >
+                <img
+                  src="../../assets/contact/bookLike2.png"
+                  alt=""
+                  class="bookLike2"
+                  :style="{ opacity: item.is_favorite ? '1' : '0' }"
+                />
+                <img
+                  src="../../assets/contact/booklike.png"
+                  alt=""
+                  class="bookLike"
+                  :style="{ opacity: item.is_favorite ? '0' : '1' }"
+                />
+              </div>
               <img
-                src="../../assets/contact/bookLike2.png"
+                src="../../assets/contact/karzinka.png"
                 alt=""
-                class="bookLike2"
-                :style="{ opacity: item.is_favorite ? '1' : '0' }"
+                class="karzinka"
+                @click="addBasket($event, item.id, item.type.book_id)"
               />
-              <img
-                src="../../assets/contact/booklike.png"
-                alt=""
-                class="bookLike"
-                :style="{ opacity: item.is_favorite ? '0' : '1' }"
-              />
+              <div class="wrapper-icons">
+                <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+                <img
+                  src="../../assets/contact/bookopen.png"
+                  alt=""
+                  class="bookopen"
+                />
+                <img
+                  src="../../assets/contact/headphone.png"
+                  alt=""
+                  class="headphone"
+                />
+              </div>
             </div>
-            <img
-              src="../../assets/contact/karzinka.png"
-              alt=""
-              class="karzinka"
-              @click="addBasket($event, item.id, item.type.book_id)"
-            />
-            <div class="wrapper-icons">
-              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-              <img
-                src="../../assets/contact/bookopen.png"
-                alt=""
-                class="bookopen"
-              />
-              <img
-                src="../../assets/contact/headphone.png"
-                alt=""
-                class="headphone"
-              />
+            <div class="ps-2">
+              <small class="title">{{ item.creator }}</small>
             </div>
-          </div>
-          <div class="ps-2">
-            <small class="title">{{ item.creator }}</small>
-          </div>
-          <div class="ps-2">
-            <small class="author">{{ item.name }}</small>
-            <small class="author"> favorite: {{ item.is_favorite }}</small>
-            {{ item.id }}
-          </div>
-          <small class="stats ms-2">5,0</small>
-          <span class="starsNumbers">(32)</span>
-        </SwiperSlide>
-      </Swiper>
+            <div class="ps-2">
+              <small class="author">{{ item.name }}</small>
+              <small class="author"> favorite: {{ item.is_favorite }}</small>
+            </div>
+            <small class="stats ms-2">5,0</small>
+            <span class="starsNumbers">(32)</span>
+          </swiper-slide>
+        </swiper-container>
+      </div>
     </div>
   </div>
 </template>
+
 <script setup>
+import { ref, onMounted } from 'vue';
 import { useRuntimeConfig } from "nuxt/app";
 
 const store = useBasketStore();
-
-const { bookImgs } = props;
-
-// const url = useRuntimeConfig().public.siteUrl;
 const urlimg = useRuntimeConfig().public.bookUrl;
+const containerRef = ref(null);
+
 const props = defineProps({
   title: String,
+  swiperDley: Number,
   bookImgs: {
     type: Array,
     default: () => [],
   },
 });
+ 
 
 const swiper = ref(null);
+const loopEnabled = ref(false);
 
-// const bookData = (event, id) => {
+watch(() => props.bookImgs, (newVal) => {
+  loopEnabled.value = newVal.length > 6;
+}, { immediate: true });
 
-// }
+onMounted(() => {
+  if (containerRef.value) {
+    // Access the Swiper instance after the component is mounted
+    swiper.value = containerRef.value.swiper;
+    
+    // Set width for slides programmatically if needed
+    if (swiper.value) {
+      const slideElements = containerRef.value.querySelectorAll('.book-slide');
+      slideElements.forEach((slide) => {
+        slide.style.width = '190px';
+      });
+      
+      // Make sure autoplay is enabled
+      if (swiper.value.autoplay && typeof swiper.value.autoplay.start === 'function') {
+        swiper.value.autoplay.start();
+      }
+    }
+  }
+});
 
-const onSwiper = (swiperInstance) => {
-  swiper.value = swiperInstance;
-};
 const addBasket = (e, id, bookId) => {
   e.stopPropagation();
   store
@@ -139,9 +169,7 @@ const addFavourite = (e, idx, id, bookId) => {
   if (props.bookImgs[idx]) {
     props.bookImgs[idx].is_favorite = !props.bookImgs[idx].is_favorite;
   }
-
-  // props.bookImgs[idx]?.is_favorite = !props.bookImgs[idx]?.is_favorite;
-
+  
   if (props.bookImgs[idx].is_favorite) {
     store.addFavourite({
       product_id: id,
@@ -159,9 +187,6 @@ const notify = () => {
     dangerouslyHTMLString: true,
   });
 };
-
-// onMounted (() => {
-// })
 </script>
 
 <style scoped>
@@ -170,28 +195,37 @@ const notify = () => {
   font-weight: 700;
 }
 
-.swiper {
-  height: 332px;
+.book-carousel-container {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.book-swiper {
+  width: 100%;
+  height: 340px;
+}
+
+.book-slide {
+  width: 190px !important; /* Force exact width */
+  height: 320px;
+  flex-shrink: 0;
 }
 
 .bookData {
   position: relative;
   height: 260px;
+  width: 100%;
 }
-.bookLike {
+
+.bookLike, .bookLike2 {
   position: absolute;
   right: 10px;
   top: 10px;
   cursor: pointer;
   display: none;
 }
-.bookLike2 {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  cursor: pointer;
-  display: none;
-}
+
 .karzinka {
   position: absolute;
   right: 10px;
@@ -199,6 +233,7 @@ const notify = () => {
   cursor: pointer;
   display: none;
 }
+
 .wrapper-icons {
   position: absolute;
   display: flex;
@@ -206,20 +241,12 @@ const notify = () => {
   right: 0.625rem;
   bottom: 0.625rem;
 }
-.ebook {
+
+.ebook, .bookopen, .headphone {
   cursor: pointer;
   display: none;
 }
 
-.bookopen {
-  cursor: pointer;
-  display: none;
-}
-
-.headphone {
-  cursor: pointer;
-  display: none;
-}
 .bookData:hover .bookLike,
 .bookData:hover .bookLike2,
 .bookData:hover .ebook,
@@ -228,6 +255,7 @@ const notify = () => {
 .bookData:hover .karzinka {
   display: block;
 }
+
 .starsNumbers {
   color: #9196ad;
   font-size: 13px;
@@ -236,9 +264,11 @@ const notify = () => {
 .title {
   font-weight: 800;
 }
+
 .author {
   color: #9196ad;
 }
+
 .btnBestseller {
   background: #67c926;
   position: absolute;
@@ -253,6 +283,7 @@ const notify = () => {
   width: 78px;
   height: 23px;
 }
+
 .newBook {
   background: #ff673d;
   position: absolute;
@@ -266,11 +297,14 @@ const notify = () => {
   width: 49px;
   height: 23px;
 }
+
 .categoyImg {
   width: 100%;
   height: 100%;
   border-radius: 7px;
+  /* object-fit: contain; */
 }
+
 .nextRight {
   width: 30px;
   height: 30px;
@@ -279,6 +313,7 @@ const notify = () => {
   cursor: pointer;
   border: none;
 }
+
 .nextLeft {
   width: 30px;
   height: 30px;
@@ -286,5 +321,33 @@ const notify = () => {
   border-radius: 0 20px 20px 0;
   cursor: pointer;
   border: none;
+}
+
+/* Swiper pagination styles */
+:deep(.swiper-pagination) {
+  position: relative;
+  margin-top: 10px;
+}
+
+:deep(.swiper-pagination-bullet) {
+  width: 8px;
+  height: 8px;
+  background: #d1d1d1;
+  opacity: 1;
+}
+
+:deep(.swiper-pagination-bullet-active) {
+  background: #67c926;
+}
+
+/* Force Swiper to respect our slide size */
+:deep(.swiper-wrapper) {
+  display: flex;
+  align-items: center;
+}
+
+:deep(.swiper-slide) {
+  width: 190px !important;
+  max-width: 190px;
 }
 </style>

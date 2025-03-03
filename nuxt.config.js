@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
+
+  nitro: {
+    routeRules: {
+      '/**': { ssr: true }
+    }
+  },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -54,7 +60,6 @@ export default defineNuxtConfig({
   // server: {
   //   port: process.env.PORT || 3000,
   // },
-  loading:  false,
 
   compatibilityDate: "2025-02-18",
 

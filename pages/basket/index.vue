@@ -1,16 +1,21 @@
 <template>
   <div>
     <div class="container px-0">
+
+      <!-- loading  -->
       <div
         v-if="empty == 0"
         class="d-flex align-items-center flex-column my-5"
         style="height: 500px; justify-content: center"
       >
+      
         <div class="d-flex align-items-center">
           <strong role="status">Loading...</strong>
           <div class="spinner-border ms-auto" aria-hidden="true"></div>
         </div>
       </div>
+
+     <!-- empty  -->
       <div
         v-else-if="empty == 1"
         class="d-flex align-items-center flex-column my-5"
@@ -22,13 +27,21 @@
           <small style="color: #9196ad">bo'limiga qarang</small>
         </small>
       </div>
+
+
+      <!-- data  -->
       <div v-else>
+
+
         <div class="mt-4 mb-3">
           <span class="basketTitle"> </span>
           <small class="basketCount"
             >{{ basketLength }} {{ $t("home.basket.product") }}</small
           >
         </div>
+
+
+
         <div class="row mb-5">
           <div class="col-9">
             <div class="d-flex justify-content-between mb-3">
@@ -143,6 +156,8 @@
                       </div>
                     </div>
                     <div class="productCount"  >
+
+                     
                       <button 
                         class="btn"
                         @click="productRemove(idx)"
@@ -151,7 +166,12 @@
                       >
                         <img src="../../assets/contact/minus.png" alt="" />
                       </button>
+
+
+
                       {{ item.product.count }}
+
+
                       <button 
                         class="btn"
                         @click="productAdd(idx)"
@@ -159,12 +179,17 @@
                       >
                         <img src="../../assets/contact/plyus.png" alt="" />
                       </button>
+
+                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+
+
           <!-- Order Data -->
           <div class="col-3">
             <div class="yourOrderContainer mt-5">
@@ -272,25 +297,52 @@ const filterItems = (products) => {
   sum = checkedItems.length;
 };
 
+// const calulatorProduct = (arry) => {
+//   let sum = 0;
+//   let priceSum = 0;
+//   arry.forEach((product, index) => {
+//     if (product.product.is_check == true) {
+//       sum += product.product.count;
+//       priceSum += product.product.totalPrice;
+
+
+//     }
+//   });
+//   totalSum.value = sum;
+//   totalPrice.value = priceSum;
+// };
+
+
 const calulatorProduct = (arry) => {
   let sum = 0;
   let priceSum = 0;
-  arry.forEach((product, index) => {
-    if (product.product.is_check == true) {
-      sum += product.product.count;
-      priceSum += product.product.totalPrice;
-
-
-    }
-  });
+  
+  // Add a null check before using forEach
+  if (arry && Array.isArray(arry)) {
+    arry.forEach((product, index) => {
+      if (product.product.is_check == true) {
+        sum += product.product.count;
+        console.log(product.product.totalPrice);
+        console.log(product.product.count);
+        
+        priceSum += product.product.totalPrice;
+      }
+    });
+  }
+  
   totalSum.value = sum;
   totalPrice.value = priceSum;
 };
 
+
 const refresh = () => {
   store.basketGet().then(() => {
     basketLength.value = store.basket.length;
+
+
     basketLength.value === 0 ? (empty.value = 1) : (empty.value = 2);
+
+
     store.basket.forEach((item, idx) => {
       item.product.is_check = true;
       item.product.count = 1;
@@ -303,12 +355,18 @@ const refresh = () => {
     });
   });
 };
+
+// delete all product
 const deleteAll = () => {
   store.removeCarts().then(() => {
     refresh()
   })
 };
 
+
+
+
+// product Add 
 const productAdd = (idx) => {
 
   store.basket[idx].product.count++;
@@ -319,6 +377,8 @@ const productAdd = (idx) => {
   store.basket[idx].product.is_check = true;
 };
 
+
+// product remove 
 const productRemove = (idx) => {
   store.basket[idx].product.count--;
 
@@ -328,6 +388,8 @@ const productRemove = (idx) => {
   store.basket[idx].product.is_check = true;
 };
 
+
+// delete baseket 
 const deleteBasket = (id) => {
   store.basketDelete(id).then(() => {
     refresh();
@@ -336,14 +398,19 @@ const deleteBasket = (id) => {
 
 // functions
 
+
+// calculotor watch 
 watch(
   store,
   (newVal) => {
-    calulatorProduct(newVal.basket);
-    select(newVal.basket);
-    filterItems(newVal.basket);
+    if(newVal.basket) {
+      calulatorProduct(newVal.basket);
+      select(newVal.basket);
+      filterItems(newVal.basket);
+
+    }
   },
-  { deep: true }
+  { deep: true, immediate: true }
 );
 
 onMounted(() => {
@@ -352,6 +419,9 @@ onMounted(() => {
   }
   refresh();
 });
+
+
+
 const bookTypeadd = (id,type) => {
   store.basket.forEach(item => {
     item.product.bookTypeId = id
@@ -360,6 +430,8 @@ const bookTypeadd = (id,type) => {
     console.log(types);
   } )
 };
+
+
 </script>
 
 <style scoped>

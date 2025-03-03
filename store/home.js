@@ -35,10 +35,12 @@ export const useTestTStore = defineStore("home", {
           this.books = res;
         })
     },
+
+    
     async fechBanner() {
       return await $fetch(`${this.url}/blog`)
         .then(res => {
-          let banner = res.filter(el => el.is_banner === 1)
+          let banner = res.filter(el => el.is_banner === 0)
           let site_bar = res.filter(el => el.is_banner === 0)
           this.banner = banner
           this.site_bar = site_bar

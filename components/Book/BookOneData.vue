@@ -28,46 +28,7 @@ const copyLink = () => {
   navigator.clipboard.writeText(copyPath);
 };
 let bookcontent = ref(1);
-const bookImgs = [
-  { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-  },
-  {
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-  },
-  { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  
-];
+
 
 const ordrItem = () => {
   let type = null
@@ -205,20 +166,7 @@ const audio_fragment = () =>{
 }
 console.log("epubUrl");
 
-// const fileupload =(e) =>{
-//   let file = e.target.files[0]
-//   let formdata = new FormData()
-//   formdata.append('image',file)
-//   formdata.append('type','product')
-//   formdata.append('height','1000')
-//   formdata.append('width','1000')
-//   formdata.append('x','0')
-//   formdata.append('y','0')
-//   $fetch('https://kytabshop.al-raqam.com/file/create',{
-//     method: 'POST',
-//     body:formdata
-//   })
-// }
+
 </script>
 
 <template>
