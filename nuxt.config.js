@@ -28,9 +28,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl:
-        process.env.NUXT_PUBLIC_SITE_URL,
+      'https://kytabshop.al-raqam.com',
+        // process.env.NUXT_PUBLIC_SITE_URL,
       siteName: "Kitob",
-      bookUrl: process.env.BOOK_URL,
+      bookUrl: 'https://beta.kytab.uz', 
+      // process.env.BOOK_URL,
       siteDescription:
         "A Full StoreFront built with Nuxt 3 + Pinia 2 + Bootstrap 5....",
       language: "uz",
