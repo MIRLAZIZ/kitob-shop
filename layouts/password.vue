@@ -3,7 +3,7 @@
     <!-- <slot /> -->
 
     <div class="main-content">
-      <PasswordPage />
+      <slot />
     </div>
     
     <div class="second-content">

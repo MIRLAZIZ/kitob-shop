@@ -38,10 +38,11 @@
           :space-between="10"
           :pagination="true"
         
-          :mousewheel="true"
+     
           :autoplay="{
-            delay: props.swiperDley || 3000,
-            disableOnInteraction: false
+            delay: props.swiperDley ,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true 
           }"
           class="book-swiper"
         >
@@ -99,7 +100,7 @@
             </div>
             <div class="ps-2">
               <small class="author">{{ item.name }}</small>
-              <small class="author"> favorite: {{ item.is_favorite }}</small>
+              <small class="author"> </small>
             </div>
             <small class="stats ms-2">5,0</small>
             <span class="starsNumbers">(32)</span>
@@ -139,6 +140,8 @@ onMounted(() => {
   if (containerRef.value) {
     // Access the Swiper instance after the component is mounted
     swiper.value = containerRef.value.swiper;
+    console.log(swiper.value);
+    
     
     // Set width for slides programmatically if needed
     if (swiper.value) {

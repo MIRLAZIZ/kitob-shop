@@ -56,12 +56,30 @@ const ordrItem = () => {
     console.log(route.params.id);
     router.push("/OrderItem");
   } else {
-    alert("Sizning profilingizda ma'lumot saqaldi");
-    let booktype = {
+    // console.log(bookType.value);
+
+    const userType =  localStorage.getItem("type");
+    
+
+    if (userType == "guest") {
+      useNuxtApp().$toast.error('Iltimos, ro\'yhatdan o\'ting', {
+          autoClose: 4000,
+          dangerouslyHTMLString: true,
+        });
+      
+
+    } else {
+      let booktype = {
       book_type_id : bookType.value,
     }
     store.AddBook(booktype)
-    console.log(booktype,'sa');
+    .then(() => {
+      alert("Sizning profilingizda ma'lumot saqaldi");
+
+    })
+    }
+    
+   
 
   }
 };
@@ -77,10 +95,12 @@ const refresh = async () => {
       let sum = 0;
       if (store.book) {
         comentsData.value.forEach((element) => {
+          
+
           let ratingData = element.rating;
           sum += ratingData;
         });
-        ratings.value = sum / elementLength;
+        ratings.value = sum / elementLength || 0;
         comitCount.value = elementLength;
       }
 
@@ -88,7 +108,6 @@ const refresh = async () => {
         store.book.type.forEach((item) => {
           type.value.push(item.type);
           if (item.type) {
-            console.log(is_book.value);
             is_book.value = true;
           }
         });
@@ -98,6 +117,7 @@ const refresh = async () => {
       console.error("Error fetching book:", error);
     });
 };
+
 
 const basketAdd = (id, type) => {
   storeBasket
@@ -125,15 +145,17 @@ const addFavourite = (id, bookId) => {
 onMounted(() => {
   refresh().then(() => {
     bookTypeadd(
-      store.book.type[0].id,
-      store.book.type[0].price,
-      store.book.type[0].file_fragment,
-      store.book.type[0].type
+      store.book?.type[0]?.id,
+      store.book?.type[0]?.price,
+      store.book?.type[0]?.file_fragment,
+      store.book?.type[0]?.type
     );
   });
   store.Popular_recent()
 
 });
+
+
 
 const notify = () => {
   useNuxtApp().$toast.success("Savatchaga qo'shildi", {
@@ -141,6 +163,8 @@ const notify = () => {
     dangerouslyHTMLString: true,
   });
 };
+
+
 const bookTypeadd = (id, price, file, type) => {
   bookType.value = id;
   bookPrice.value = price;
@@ -156,32 +180,53 @@ const bookTypeadd = (id, price, file, type) => {
 
 const fragment = ()=>{
   let data = JSON.stringify(file_fragment.value)
-  localStorage.setItem('epubUrl',data)
+  if(process.client){
+    localStorage.setItem('epubUrl',data)
+    
+  }
   router.push('/reading')
 }
+
+
+
+
 const audio_fragment = () =>{
   let data = JSON.stringify(file_fragment.value)
   localStorage.setItem('audio_fragment',data)
   router.push('/audio')
 }
-console.log("epubUrl");
 
 
 </script>
 
 <template>
-  <div class="container mb-5 pb-5 px-0">
+  <div class="container mb-5 pb-5 px-0">  
+
+      
     <div class="my-3">
-      <small class="mt-5">
-        Bosh sahifa/
-        <span>{{
+      <small class="mt-5 " style="cursor: pointer;">
+
+        <span @click="router.push('/')">
+          Bosh sahifa
+
+        </span>
+
+        <span v-if="store.book && store.book.category.length" @click="router.push(`/Categories/${store.book?.category[0]?.id}`)">/{{
+
           $i18n.locale == "uz"
             ? store.book?.category[0]?.name_oz
             : store.book?.category[0]?.name_ru
         }}</span>
-        <span>
-          / {{ store.book?.name }} ({{ store.book?.author[0].fio }})
+
+
+        <span v-if="store.book && store.book.name">
+          / {{ store.book?.name }} 
         </span>
+
+
+        <span v-if="store.book && store.book.author[0]?.fio"> ({{ store.book?.author[0]?.fio }})</span>
+
+
       </small>
     </div>
     <div class="row">
@@ -199,7 +244,7 @@ console.log("epubUrl");
       <div class="col-8">
         <div class="row">
           <div class="col-8">
-            <p class="bookAuthor">{{ store.book?.author[0].fio }}</p>
+            <p class="bookAuthor">{{ store.book?.author[0]?.fio }}</p>
 
             <h3 class="bookTitle">{{ store.book?.name }}</h3>
           </div>
@@ -210,8 +255,9 @@ console.log("epubUrl");
               alt=""
               class="me-2"
               style="cursor: pointer"
-              @click="addFavourite(store.book.id, store.book.type)"
+              @click="addFavourite(store.book?.id, store.book?.type)"
             />
+            
 
             <!-- copy img -->
             <img
@@ -260,6 +306,8 @@ console.log("epubUrl");
             </div>
             
             <div class="mt-2 row">
+
+
               <div class="col-6">
                 <button @click="fragment " :disabled="reading !==1 " :style="{   cursor: reading !== 1 ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
                   <img src="@/assets/contact/book-open2.png" alt="" />{{
@@ -267,6 +315,7 @@ console.log("epubUrl");
                   }}
                 </button>
               </div>
+
               <div class="col-6">
                 <button @click="audio_fragment" style="display:flex; align-items:center; justify-content:center;" :disabled="reading !== 2" :style="{   cursor:   reading !== 2  ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
                   <img src="@/assets/contact/headphones2.png" style="margin-right: 5px;"  alt="" />{{
@@ -274,6 +323,8 @@ console.log("epubUrl");
                   }}
                 </button>
               </div>
+
+
             </div>
             
             <!-- <pre>{{ file_type }}</pre> -->
@@ -366,7 +417,9 @@ console.log("epubUrl");
       </div>
       <!-- <input type="file" @change="fileupload"> -->
         
-      <Swiper
+
+
+      <!-- <Swiper
         :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
         :grid="{ rows: 1, fill: 'row' }"
         :slides-per-view="6"
@@ -375,7 +428,6 @@ console.log("epubUrl");
         @swiper="onSwiper"
       >
       
-      <!-- <div class="bookGrid mt-3"> -->
         <div v-if="store.recent && store.recent.product">
           <SwiperSlide
           class="p-0 dataItem"
@@ -383,8 +435,6 @@ console.log("epubUrl");
           :key="index"
         >
           <div class="bookDataa">
-            <!-- <img v-if="item.type == 'book'" :src="'https://beta.kytab.uz'+item.product.image" alt="" class="categoyImg" />
-            <img v-else :src="'https://kytabshop.al-raqam.com'+item.product.image" alt="" class="categoyImg" /> -->
             
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
@@ -416,7 +466,6 @@ console.log("epubUrl");
           </div>
           <div>
             <small v-if="(item.product.price)" class="price">{{ item.product.price }} so'm</small>
-            <!-- <small v-else class="price">Tekin</small> -->
             
           </div>
           <img src="../../assets/contact/Star.png" alt="" />
@@ -425,12 +474,9 @@ console.log("epubUrl");
         </SwiperSlide>
         </div>
      
-      <!-- </div> -->
-    </Swiper>
+    </Swiper> -->
     </div>
-    <!-- <pre>
-      {{ store.recent }} 
-    </pre> -->
+  
       
   </div>
 </template>

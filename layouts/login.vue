@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main-content">
-      <LoginPage />
+      <slot /> <!-- Bu yerda sahifa tarkibi paydo bo‘ladi -->
     </div>
     
     <div class="second-content">
@@ -13,8 +13,6 @@
       </div>
       <MobileApp />
     </div>
-
-    <!-- <slot /> -->
   </div>
 </template>
 
@@ -23,7 +21,6 @@ import MobileApp from "@/components/Home/MobileApp.vue";
 </script>
 
 <style lang="scss" scoped>
-
 .box {
   background: red;
   width: 100%;
@@ -53,5 +50,4 @@ import MobileApp from "@/components/Home/MobileApp.vue";
     flex-direction: column;
   }
 }
-
 </style>

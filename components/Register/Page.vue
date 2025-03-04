@@ -25,7 +25,7 @@
             Roʻyxatdan oʻting va 1280+ kitobga kirish huquqiga ega boʻling
           </h2>
         </div>
-        <Form @submit="onSubmit" action="">
+        <div >
           <div class="mb-3 mt-3 list">
             <label for="name" class="form-label"
               >Ism familiya <span>*</span></label
@@ -66,7 +66,7 @@
             <label for="password" class="form-label"
               >Parol <span>*</span></label
             >
-            <box-icon type="solid" name="user-circle"></box-icon>
+            <!-- <box-icon type="solid" name="user-circle"></box-icon> -->
 
             <input
               ref="emailInput"
@@ -88,7 +88,7 @@
               <NuxtLink to="/">Tizimga kirish</NuxtLink>
             </h2>
           </div>
-        </Form>
+        </div>
       </div>
     </div>
   </div>

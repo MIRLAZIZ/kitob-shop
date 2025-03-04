@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="about">
-      <div class="d-flex pt-2" v-if="store?.book?.author[0].fio">
+      <div class="d-flex pt-2" v-if="store?.book?.author[0]?.fio">
           <p>{{ $t("home.author") }}</p>
         <div class="flex-fill">
           <hr class="hr" />
         </div>
-          <p>{{ store?.book?.author[0].fio }}</p>
+          <p>{{ store?.book?.author[0]?.fio }}</p>
       </div>
-      <div class="d-flex pt-2"  v-if="store?.book?.author[0].fio">
+      <div class="d-flex pt-2"  v-if="store?.book?.author[0]?.fio">
           <p>{{ $t("home.genre") }}</p>
         <div class="flex-fill">
           <hr class="hr" />
         </div>
-          <p>{{store.book?.category[0].name_oz}}</p>
+          <p>{{store.book?.category[0]?.name_oz}}</p>
       </div>
       <div class="d-flex pt-2"  v-if="store?.book?.year ">
           <p>{{ $t("home.year") }}</p>

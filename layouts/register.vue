@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- <slot /> -->
 
     <div class="main-content">
-      <RegisterPage />
+      <slot />
     </div>
     
     <div class="second-content">

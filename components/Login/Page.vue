@@ -20,7 +20,7 @@
           <h1>Tizimga kirish</h1>
           <h2>Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling</h2>
         </div>
-        <dev>
+        <div>
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label"
               >Telefon raqam <span>*</span></label
@@ -30,7 +30,6 @@
             <input
               v-model="telNumber"
               class="form-control"
-              v-maska data-maska="############"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -53,7 +52,7 @@
             <span v-if="error" style="color: red">{{ error }}</span>
 
             <div class="li">
-              <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
+              <NuxtLink to="/password">Parolni unutdingizmi?</NuxtLink>
             </div>
           </div>
           <button @click="senDataUser">Login</button>
@@ -63,7 +62,7 @@
               <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
             </h2>
           </div>
-        </dev>
+        </div>
       </div>
     </div>
   </div>

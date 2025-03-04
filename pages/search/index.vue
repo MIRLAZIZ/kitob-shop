@@ -1,22 +1,31 @@
 <template>
     <div>        
       <div class="container">
+
+
         <div class="bookGrid mt-4 row" >
-          <div class="p-0 booksList col-10 col-md-5" v-for="(item,index) in store.productSearch" :key="index" @click="selectBook(item.id)">
+
+
+          <div class="p-0 booksList  " v-for="(item,index) in store.productSearch" :key="index" @click="$router.push(`/book/${item.id}`)">
+
+
             <div class="bookData">
-              <img class="bookData_img" :src="'https://kytabshop.al-raqam.com'+'/'+item.image" alt="" aria-placeholder="s">
+              <img class="bookData_img " :src="'https://kytabshop.al-raqam.com'+'/'+item.image" alt="" aria-placeholder="s">
               <button class="btnBestseller">Bestseller</button>
               <button class="newBook">Yangi</button>
               <img src="../../assets/contact/booklike.png" alt="" class="bookLike" />
               <img src="../../assets/contact/karzinka.png" alt="" class="karzinka" />
               <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
             </div>
+
             <div class="ps-2">
               <small class="title">{{ item.name_uz }}</small>
             </div>
+
             <div class="auth">
               <small class="author">{{ item.author }}</small>
             </div>
+
             <p>{{ item.price }} narxi</p>
             <p>{{ item.quantity }} marta sotib olingan</p>
             <p>{{ item.description_uz }}</p>
@@ -24,7 +33,7 @@
             <small class="stats ms-2">5,0</small>
             <span class="starsNumbers">(32)</span>
           </div>
-          <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo dolorum molestias dolorem adipisci aliquam repudiandae asperiores facilis praesentium! Accusamus reprehenderit aut ducimus, quas voluptas dolorem, necessitatibus voluptatem deserunt, ab nemo placeat. Officiis fugit quas inventore molestias magni! Obcaecati a animi soluta architecto quos magni repellat mollitia neque ducimus ipsam corporis amet repudiandae dignissimos veniam rem, hic incidunt harum voluptatem, ea quibusdam nisi perferendis eveniet quis? Consequuntur id eos expedita cumque ipsam quidem harum reprehenderit, quas necessitatibus? Quo quis obcaecati, nulla quidem fuga sint commodi incidunt! Ipsa amet velit, obcaecati repudiandae corrupti quia aut consectetur officia, hic rerum voluptatem, doloremque architecto. -->
+       
         </div>
         
       </div>
@@ -75,8 +84,10 @@ const store = useTestTStore();
   height: 260px;
 }
 .bookData_img{
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  border: solid 2px green;
 }
 .bookLike {
   position: absolute;

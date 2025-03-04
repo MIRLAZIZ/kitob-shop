@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="container px-0">
+      
 
       <!-- loading  -->
       <div
@@ -89,17 +90,25 @@
                       <p class="bookAuthor">{{ item.product.author }}</p>
                       <p class="bookPrice">{{ item.product.price }}</p>
                       <div class="basket">
+                        
+                        <!-- types  -->
                         <button
                           class="btn border px-3"
                           v-for="(itm, index) in item.product.types"
                           :key="index"
-                          @click="bookTypeadd(itm.id,itm.type)"
+                          @click="item.product.bookTypeId = itm.id, item.product.type = itm.type"
                           :class="{'active' : item.product.bookTypeId == itm.id}"
                          
                         >
+
+                         {{ itm.id }}
                           {{ itm.type}}
                           
                         </button>
+
+
+
+
                       
                       </div>
                     </div>
@@ -161,7 +170,7 @@
                       <button 
                         class="btn"
                         @click="productRemove(idx)"
-                        :disabled="item.product.count == 1  || types == 'audio' && item.product.type == 'book' || types == 'ebook' && item.product.type == 'book'"
+                        :disabled="item.product.count == 1  || item.product.type !== 'paper' "
 
                       >
                         <img src="../../assets/contact/minus.png" alt="" />
@@ -172,10 +181,10 @@
                       {{ item.product.count }}
 
 
-                      <button 
+                      <button   
                         class="btn"
                         @click="productAdd(idx)"
-                        :disabled="item.product.count == item.product.quantity || types == 'audio' && item.product.type == 'book' || types == 'ebook' && item.product.type == 'book'"
+                        :disabled="  item.product.type !== 'paper' || item.product.count >= item.product.quantity"
                       >
                         <img src="../../assets/contact/plyus.png" alt="" />
                       </button>
@@ -350,6 +359,7 @@ const refresh = () => {
       item.product.totalPrice = item.product.price;
       if(item.product.types) {
         item.product.bookTypeId=item.product.types[0].id
+        item.product.type=item.product.types[0].type
 
       }
     });

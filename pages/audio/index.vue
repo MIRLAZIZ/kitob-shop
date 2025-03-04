@@ -2,23 +2,35 @@
   <div>
     <div class="audio">
       <div class="flex">
+
+        
         <div class="container">
           <img src="../../assets/profile/back1.png" alt="" />
           <h2 class="audio_h2">Malkolm Gladuell “ Zukkolar va landovurlar”</h2>
         </div>
+
+
       </div>
+
+
       <div class="container">
         <div class="wrapper">
           <div class="wrapper_ul">
             <img :src="urlimg + audioData?.book?.image" alt="" />
             <h2>Malkolm Gloduel</h2>
+
+
             <h1>{{ audioData?.book?.name }}</h1>
             <div class="audio-player">
               <div class="controls">
+
+
                 <div class="remainingTime">
                   <div class="remaining">{{ remainingTime }}</div>
                   <div class="remaining">{{ minusTime }}</div>
                 </div>
+
+
                 <div class="progress-bar">
                   <input
                     type="range"
@@ -28,6 +40,8 @@
                     max="100"
                   />
                 </div>
+
+
                 <div class="speed-wrapper">
                   <div class="speed-control">
                     <select
@@ -50,6 +64,8 @@
                       </option>
                     </select>
                   </div>
+
+
                   <div class="play-control">
                     <img
                       @click="playPrevious"
@@ -57,15 +73,20 @@
                       src="../../assets/profile/ago.png"
                       alt=""
                     />
+
                     <img
                       @click="skipBackward"
                       class="audio-img"
                       src="../../assets/profile/agospeed.png"
                       alt=""
                     />
+
+
                     <button @click="togglePlayback">
                       {{ isPlaying ? "Pause" : "Play" }}
                     </button>
+
+
                     <img
                       @click="skipForward"
                       class="audio-img"
@@ -81,6 +102,8 @@
                   </div>
                   <div class="sound-control">
                     <img src="../../assets/profile/sound.png" alt="" />
+
+
                     <input
                       type="range"
                       v-model="volume"
@@ -88,11 +111,14 @@
                       min="0"
                       max="100"
                     />
+
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div class="ul">
             <div class="list" v-for="(item, ind) in store.books" :key="ind">
               <img class="img" :src="urlimg + '/' + item.book.image" alt="" />
@@ -106,6 +132,8 @@
               </div>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -141,6 +169,7 @@ const speed = ref("1");
 
 onMounted(() => {
   const storedAudioData = JSON.parse(localStorage.getItem("audioData"));
+  console.log(storedAudioData);
   if (storedAudioData) {
     audioData.value = storedAudioData;
     audioSrcs.value.push(urlimg + storedAudioData.file_path);
