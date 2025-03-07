@@ -140,7 +140,6 @@ onMounted(() => {
   if (containerRef.value) {
     // Access the Swiper instance after the component is mounted
     swiper.value = containerRef.value.swiper;
-    console.log(swiper.value);
     
     
     // Set width for slides programmatically if needed

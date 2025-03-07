@@ -173,30 +173,30 @@
                 {{ item.is_bestseller == 1 ? "Bestseller" : "Yangi" }}
               </button>
               <img
-                src="../../assets/contact/booklike.png"
+                src="/assets/contact/booklike.png"
                 alt=""
                 class="bookLike"
               />
 
               <img
-                src="../../assets/contact/karzinka.png"
+                src="/assets/contact/karzinka.png"
                 alt=""
                 class="karzinka"
                 @click="basketAdd($event, item.id, item.type.length)"
               />
               <div class="wrapper-icons">
                 <img
-                  src="../../assets/contact/eBook.png"
+                  src="/assets/contact/eBook.png"
                   alt=""
                   class="ebook"
                 />
                 <img
-                  src="../../assets/contact/bookopen.png"
+                  src="/assets/contact/bookopen.png"
                   alt=""
                   class="bookopen"
                 />
                 <img
-                  src="../../assets/contact/headphone.png"
+                  src="/assets/contact/headphone.png"
                   alt=""
                   class="headphone"
                 />
@@ -208,7 +208,7 @@
             <div class="ps-2">
               <small class="author">{{ item.description }}</small>
             </div>
-            <img src="../../assets/contact/Star.png" alt="" />
+            <img src="/assets/contact/Star.png" alt="" />
             <small class="stats ms-2">5,0</small>
             <span class="starsNumbers">(32)</span>
           </div>
@@ -220,86 +220,11 @@
           </h1>
         </div>
 
-        <div class="mt-5 mb-5">
-          <div class="d-flex justify-content-between mb-3">
-            <h6 class="p-0">{{ $t("home.recently") }}</h6>
-            <div>
-              <button class="nextRight me-2" @click="swiper.slidePrev()">
-                <img src="@/assets/contact/arrowRight.png" alt="" />
-              </button>
-              <button class="nextLeft" @click="swiper.slideNext()">
-                <img src="@/assets/contact/arrowLeft.png" alt="" />
-              </button>
-            </div>
-          </div>
-          <Swiper
-            :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
-            :grid="{ rows: 1, fill: 'row' }"
-            :slides-per-view="6"
-            :space-between="10"
-            :pagination="{ clickable: true }"
-            @swiper="onSwiper"
-          >
-            <!-- <div class="bookGrid mt-3"> -->
-            <div v-if="store1.recent && store1.recent.product">
-              <SwiperSlide
-                class="p-0 dataItem"
-                v-for="(item, index) in store.recent"
-                :key="index"
-              >
-                <div class="dataItem">
-                  <!-- <img v-if="item.type == 'book'" :src="'https://beta.kytab.uz'+item.product.image" alt="" class="categoyImg" />
-            <img v-else :src="'https://kytabshop.al-raqam.com'+item.product.image" alt="" class="categoyImg" /> -->
 
-                  <button class="btnBestseller">Bestseller</button>
-                  <button class="newBook">Yangi</button>
-                  <img
-                    src="../../assets/contact/booklike.png"
-                    alt=""
-                    class="bookLike"
-                  />
-
-                  <img
-                    src="../../assets/contact/karzinka.png"
-                    alt=""
-                    class="karzinka"
-                  />
-                  <img
-                    src="../../assets/contact/eBook.png"
-                    alt=""
-                    class="ebook"
-                  />
-                </div>
-                <div class="ps-2">
-                  <small class="title">{{ item.product?.name }}</small>
-                  <pre>
-            {{ item.product }}
-
-            </pre
-                  >
-                </div>
-                <div class="ps-2">
-                  <small class="author">{{ item.product.author }}</small>
-                  <small class="author">{{
-                    item.product.description_uz
-                  }}</small>
-                </div>
-                <div>
-                  <small v-if="item.product.price" class="price"
-                    >{{ item.product.price }} so'm</small
-                  >
-                  <!-- <small v-else class="price">Tekin</small> -->
-                </div>
-                <img src="../../assets/contact/Star.png" alt="" />
-                <small class="stats ms-2">5,0</small>
-                <span class="starsNumbers">(32)</span>
-              </SwiperSlide>
-            </div>
-
-            <!-- </div> -->
-          </Swiper>
-        </div>
+        <UiCarousel/>
+       
       </div>
+
     </div>
   </div>
 </template>
@@ -314,10 +239,9 @@ const storeBasket = useBasketStore();
 const url = useRuntimeConfig().public.bookUrl;
 let lang_book = ref("all");
 let type_book = ref("all");
-let swiper = null;
-const onSwiper = (sw) => {
-  swiper = sw;
-};
+
+
+
 
 const basketAdd = (e, id, type) => {
   e.stopPropagation();
@@ -423,7 +347,12 @@ onMounted(() => {
     oBarMinValue.value,
     oBarMaxValue.value
   );
+
+
+
+  
 });
+
 
 const selectBook = (id) => {
   const router = useRouter();
@@ -629,23 +558,7 @@ const selectBook = (id) => {
   display: none;
 }
 
-.nextRight {
-  width: 30px;
-  height: 30px;
-  background: #f6f6f6;
-  border-radius: 20px 0 0 20px;
-  cursor: pointer;
-  border: none;
-}
 
-.nextLeft {
-  width: 30px;
-  height: 30px;
-  background: #f6f6f6;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  border: none;
-}
 .ebook {
   position: absolute;
   right: 10px;

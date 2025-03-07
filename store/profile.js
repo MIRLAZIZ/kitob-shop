@@ -21,6 +21,7 @@ export const ProfileHistory = defineStore("test", {
     },
     async Settings(data) {
       return await profile_setting.create(data)
+      
     },
     async Setting() {
       return await profile_get.get()

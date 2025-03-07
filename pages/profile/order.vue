@@ -1,8 +1,8 @@
 <template>
   <div >
-      <div class="main  ">
-        <div class="row">
-          <div class="row  ">
+      <div class="  w-full p-3">
+        <div class=" ">
+          <div class="   ">
             <h1 class="h1">{{ $t("home.profile.Order history") }}</h1>
             <div class="main_div ">
               <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">{{ $t("home.profile.Installment payment") }}</div>
@@ -30,27 +30,17 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.main {
-  width: 100%;
-  height: 226px;
-  top: 232px;
-  // background-color: #fafafa;
-  // background-color: red;
-  margin: 40px 0px 412px 10px;
-}
+
 .h1 {
-  width: 188px;
   height: 47px;
-  top: 250px;
-  left: 509px;
+  
   font-family: Manrope;
   font-size: 20px;
   font-weight: 600;
   line-height: 27px;
   letter-spacing: 0.02em;
-  text-align: left;
+  // text-align: left;
   color: #35363d;
-  margin: 18px 632px 0px 30px;
   padding-top: 18px;
 }
 .main_div {
@@ -63,10 +53,9 @@ onMounted(() => {
   
 }
 .main_p {
-  width: full;
+ 
   height: 35px;
-  top: 292px;
-  left: 509px;
+ 
   font-family: Manrope;
   font-size: 15px;
   font-weight: 500;

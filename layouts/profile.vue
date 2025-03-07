@@ -1,20 +1,14 @@
 <template>
-  <div class="main-content">
+  <div class="main-content ">
     <div>
-      <!-- <SeoKit /> -->
       <Header />
 
-<!-- <<<<<<< HEAD -->
-    <div class="d-flex container" >
-      <UserProfile />
+    <div class="d-flex    pe-0 container my-5 " >
+      <UserProfile  style="margin-right: 30px;"/>
       <slot />
-<!-- =======
-      <div class="d-flex container" style="height: 100%">
-        <UserProfile />
-        <slot /> -->
+
       </div>
       <Footer />
-<!-- >>>>>>> 1a742d1f3d5b959d852f30107d39191a7ebc4fe7 -->
     </div>
   </div>
 

@@ -86,10 +86,14 @@ const passwordError = ref(null);
 const tel = ref(telNumber.value);
 
 const error = ref(null);
+
+
 const maskval = (data) => {
   let stringData = String(data)
   return stringData.substring(1, 20).replace(/\s/g, "");
 };
+
+
 watch(
   telNumber,
   (newValue) => {
@@ -97,7 +101,7 @@ watch(
 
     errorTel.value = !isEmpty(maskval(newValue), "Telifon nomeri").item
       ? isEmpty(maskval(newValue), "Telifon nomeri")
-      : validateLength(maskval(newValue), 12, 12, "telfon nomeri");
+      : validateLength(maskval(newValue), 11, 11, "telfon nomeri");
   },
   { deep: true }
 );
@@ -116,26 +120,38 @@ const senDataUser = () => {
   // telefon
   errorTel.value = validateLength(
     maskval(telNumber.value),
-    12,
-    12,
+    11,
+    11,
     "telfon nomeri"
   );
   // password
   passwordError.value = passwordValidator(password.value);
   let array = [errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
-  console.log(validtaionDAta);
+
+
   userlogin.value.phone = telNumber.value
   userlogin.value.password = password.value
-  console.log(userlogin.value);
+
+
   // localStorage.setItem('type',client)
 
   if (validtaionDAta) {
 
-    store.loginUser(userlogin.value);
-    router.push('/')
+    store.loginUser(userlogin.value).then(() => {
+      router.push('/')
+
+    }).catch((error) => {
+      useNuxtApp().$toast.error(error.response._data.message, {
+        autoClose: 2000,
+        dangerouslyHTMLString: true,
+      });
+    });
+
   }
 };
+
+
 
 </script>
   

@@ -5,33 +5,35 @@
         <div style="padding: 22px">
           <div style="display: flex">
             <div class="aylana">
-              <img src="@/assets/profile/Vector.svg" alt="" />
+              <img src="@/assets/profile/Vector.svg" alt="" v-if="!userData?.client?.image"/>
+              <img :src="baseUrl + userData?.client?.image" v-else alt="">
             </div>
             <div style="margin-top: 10px">
-              <div>
-                <h2 class="h2">Sherzod Abdullayev</h2>
-                <p class="p1">+998 94 002 25 52</p>
+              <div >
+                <h2 class="h2">{{ userData?.client?.full_name }}</h2>
+                <p class="ps-2"> {{ formatPhoneNumber(userData?.client?.phone) }}</p>
+              
               </div>
             </div>
           </div>
           <img src="@/assets/profile/chiziq.svg" alt="" />
-          <div @click="router.push('/profile')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile' }">
+          <div @click="$router.push('/profile')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile' }">
             <img class="rasm" src="@/assets/profile/Frame.svg" alt="" />
             <p class="h2">{{$t("home.profile.Notification")}}</p>
           </div>
-          <div @click="router.push('/profile/order')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/order' }">
+          <div @click="$router.push('/profile/order')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/order' }">
             <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
             <p class="h2">{{ $t("home.profile.Order history") }}</p>
           </div>
-          <div @click="router.push('/profile/book')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/book' }">
+          <div @click="$router.push('/profile/book')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/book' }">
             <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
             <p class="h2">{{ $t("home.profile.My books") }}</p>
           </div>
-          <div @click="router.push('/profile/settings')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/settings' }">
+          <div @click="$router.push('/profile/settings')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/settings' }">
             <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
             <p class="h2">{{ $t("home.profile.Profile settings") }}</p>
           </div>
-          <div @click="router.push('/') " class="main_list" :class="{ 'router-link-active': $route.path === '/' }">
+          <div @click="$router.push('/') " class="main_list" :class="{ 'router-link-active': $route.path === '/' }">
             <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
             <p class="h2" style="color: red">{{ $t("home.profile.Exit") }}</p>
           </div>
@@ -44,9 +46,20 @@
 <script setup>
 const content = ref(false)
 const notification = ref(true)
-const router = useRouter()
+const userData = ref(null)
+const  baseUrl = useRuntimeConfig().public.siteUrl
+
+function formatPhoneNumber(number) {
+    if (!number) return '';
+    return number.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5');
+}
 
 
+
+
+onMounted(() => {
+ userData.value = JSON.parse(localStorage.getItem("userData"))
+})
 
 </script>
   <style lang="scss" scoped>
@@ -58,19 +71,15 @@ const router = useRouter()
 .main {
   background-color: #fafafa;
 
-  height: 392px;
-  top: 232px;
-  left: 121px;
+  // height: 392px;
+ 
   border-radius: 10px;
-  margin-top: 30px;
-  margin-bottom: 200px;
+
 }
 .main_list {
   display: flex;
   width: 288px;
   height: 42px;
-  top: 354px;
-  left: 141px;
   border-radius: 10px;
   margin-top: 5px;
   cursor: pointer;
@@ -80,11 +89,15 @@ const router = useRouter()
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  top: 254px;
-  left: 143px;
   background-color: #f3f3f3;
   align-items: center;
   justify-content: center;
+}
+
+.aylana img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 .h2 {
   width: 176px;
@@ -92,7 +105,7 @@ const router = useRouter()
   top: 265px;
   left: 225px;
   font-family: Manrope;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 25px;
   letter-spacing: 0.02em;

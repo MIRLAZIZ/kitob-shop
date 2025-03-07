@@ -5,7 +5,7 @@
         position: absolute;
         background: #31313159;
         width: 100%;
-        height: 130vh;
+        /* height: 130vh; */
         z-index: 4;
       "
       :style="{ display: inputFocus ? 'block' : 'none' }"
@@ -33,7 +33,7 @@
         <!-- {{ inputFocus }}
         {{ searchList }} -->
         <div style="position: relative; z-index: 4">
-          <div class="input-group" style="width: 479px">
+          <div class="input-group" >
             <input
               type="text"
               @change="result"
@@ -267,7 +267,7 @@ watch(() => basketStore.like, (newLike, oldLike) => {
 
 .btnCategory {
   background: #ebf2fc;
-  height: 44px;
+  /* height: 44px; */
 }
 
 .forFont {

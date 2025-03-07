@@ -1,5 +1,5 @@
 <template>
-     <div>
+     <div class="table-container">
         <table>
           <thead>
             <tr>
@@ -14,9 +14,10 @@
                 v-for="(bodyInHeader, bodyInIndex) in headers"
                 :key="bodyInIndex"
               >
-                <slot :name="`body_${bodyInHeader.value}`" :item="item">
+              {{ bodyInHeader.value }}
+                <!-- <slot :name="`body_${bodyInHeader.value}`" :item="item">
                   {{ item[bodyInHeader.value] }}
-                </slot>
+                </slot> -->
               </td>
             </tr>
           </tbody>
@@ -71,62 +72,83 @@ const body = [
 </script>
 
 <style lang="scss" scoped>
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+
 table {
   width: 100%;
-  // padding: 10px;
-  // border-collapse: separate;
-  // border-spacing: 0;
-  // overflow-x: auto;
-  thead {
-    //   background-color: #1073a9;
-
-    th {
-      border-bottom: 1px solid #c5d2d6;
-      padding: 10px 36px;
-      width: 29px;
-      height: 18px;
-      top: 352px;
-      // left: 835px;
-      color: #9196ad;
-      font-family: Manrope;
-      font-size: 13px;
-      font-weight: 400;
-      line-height: 18px;
-      letter-spacing: 0.02em;
-      // text-align:left;
-
-      //   border: 2px solid red;
-    }
-  }
-  tbody {
-    background-color: white;
-    
-    tr {
-      // background-color: rgb(228, 111, 111);
-      background:white;
-
-      td {
-        padding: 10px 36px;
-        width: 62px;
-        height: 18px;
-        top: 352px;
-        // left: 835px;
-        color: #2986e3; 
-        font-family: Manrope;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 18px;
-        letter-spacing: 0.02em;
-        text-align: left;
-
-
-
-        slot {
-          border-radius: 10px solid green;
-          color: #e90d0d;
-        }
-      }
-    }
-  }
+  border-collapse: collapse;
 }
+
+thead th {
+  padding: 12px;
+  border-bottom: 2px solid #ddd;
+  text-align: left;
+  color: #9196ad;
+  font-size: 13px;
+}
+
+
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: #2986e3; 
+        font-family: Manrope;
+        font-size: 13px;
+        font-weight: 400;
+}
+
+/* Maxsus slot styling */
+td span {
+  font-weight: bold;
+  color: #e90d0d;
+}
+
+
+// table {
+//   width: 100%;
+ 
+//   thead {
+
+//     th {
+//       border-bottom: 1px solid #c5d2d6;
+//       padding: 10px 36px;
+//       height: 18px;
+//       color: #9196ad;
+//       font-family: Manrope;
+//       font-size: 13px;
+//       font-weight: 400;
+    
+//     }
+//   }
+//   tbody {
+//     background-color: white;
+    
+//     tr {
+//       background:white;
+
+//       td {
+//         padding: 10px 36px;
+//         height: 18px;
+//         top: 352px;
+//         color: #2986e3; 
+//         font-family: Manrope;
+//         font-size: 16px;
+//         font-weight: 400;
+//         line-height: 18px;
+//         letter-spacing: 0.02em;
+//         text-align: left;
+
+
+
+//       }
+//     }
+//   }
+// }
 </style>

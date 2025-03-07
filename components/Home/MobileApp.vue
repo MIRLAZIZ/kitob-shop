@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="mobileApp mt-5">
+    <div class="mobileApp mt-5 contaner">
       <div class="container px-0 py-5">
-        <div class="row">
+        <div class="row ">
           <div class="col-7">
             <h2>{{ $t("home.mobile") }}</h2>
             <br />
@@ -37,7 +37,7 @@
   font-size: 20px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1130px) {
   .col-7 {
   width: 100%;
 }
@@ -74,4 +74,11 @@
   height: 180px;
 }
 }
+
+
+
+
+
+
+
 </style>
