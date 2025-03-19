@@ -40,7 +40,7 @@
         
      
           :autoplay="{
-            delay: props.swiperDley ,
+            delay: props.swiperDley || 6000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true 
           }"

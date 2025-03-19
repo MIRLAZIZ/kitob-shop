@@ -151,5 +151,27 @@
     "blog": "Blog",
     "recipes": "Retseptlar",
     "contacts": "Kontaktlar"
+
+    
+  },
+
+
+  "validation": {
+    "invalid_email": "Email manzili noto'g'ri formatda",
+    "required": "{field} maydonini to'ldirish shart",
+    "min_length": "{field} maydoni kamida {min} belgidan iborat bo'lishi kerak",
+    "max_length": "{field} maydoni maksimal {max} belgidan oshmasligi kerak",
+    "weak_password": "Parol kamida 6 ta belgidan iborat bo‘lishi, katta va kichik harflarni hamda raqamni o'z ichiga olishi kerak",
+    "password_mismatch": "Parol tasdiqlash noto‘g‘ri"
+  },
+  "order": {
+    "full_name": "Ism familiya",
+    "form_not": "Iltimos, barcha kerakli maydonlarni to‘ldiring!",
+    "success": "Buyurtmangiz rasmiylashtirildi!"
+    
+
+
   }
+
+
 }

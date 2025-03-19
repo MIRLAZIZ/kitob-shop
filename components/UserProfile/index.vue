@@ -5,13 +5,13 @@
         <div style="padding: 22px">
           <div style="display: flex">
             <div class="aylana">
-              <img src="@/assets/profile/Vector.svg" alt="" v-if="!userData?.client?.image"/>
-              <img :src="baseUrl + userData?.client?.image" v-else alt="">
+              <img src="@/assets/profile/Vector.svg" alt="" v-if="!userData?.image"/>
+              <img :src="baseUrl + userData?.image" v-else alt="">
             </div>
             <div style="margin-top: 10px">
               <div >
-                <h2 class="h2">{{ userData?.client?.full_name }}</h2>
-                <p class="ps-2"> {{ formatPhoneNumber(userData?.client?.phone) }}</p>
+                <h2 class="h2">{{ userData?.full_name }}</h2>
+                <p class="ps-2"> {{ formatPhoneNumber(userData?.phone) }}</p>
               
               </div>
             </div>

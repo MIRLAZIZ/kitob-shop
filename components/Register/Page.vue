@@ -122,6 +122,15 @@ watch(phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri"
 watch(password, (newValue) => { passwordError.value = passwordValidator(newValue);
 }, { deep: true });
 
+
+
+
+
+
+
+
+
+
 const senDataUser = async () => {
   emailError.value = isEmpty(userRegister.value.full_name, "ismi");
   console.log(emailError.value,'salomat usejon');
@@ -138,7 +147,6 @@ const senDataUser = async () => {
   if (validtaionDAta) { 
     await store.registerUser(userRegister.value);
   }
-  console.log(validtaionDAta);
   if (validtaionDAta) {
     console.log('malumotlar yuborildi');
     localStorage.setItem("phone",userRegister.value.phone)

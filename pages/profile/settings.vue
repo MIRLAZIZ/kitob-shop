@@ -146,7 +146,7 @@ const template = ref(null)
 const send = async () => {
     await store.Settings(form.value)
         .then((res) => {
-            localStorage.setItem('userData', JSON.stringify(res.result))
+            localStorage.setItem('userData', JSON.stringify(res.result.client))
 
             localStorage.setItem('token', res.result.token)
             localStorage.setItem('refreshToken', res.result.refresh_token)

@@ -44,11 +44,11 @@ export default defineNuxtPlugin((_nuxtApp) => {
           // Check if code is running in the client-side environment
           // jwtToken = localStorage.getItem('jwtToken');
           jwtToken = localStorage.getItem('refreshToken')
-          useTestTStore().refreshToken()
+          // useTestTStore().refreshToken()
         }
 
 
-        useTestTStore().refreshToken()
+        // useTestTStore().refreshToken()
 
       }
     }

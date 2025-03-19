@@ -99,22 +99,19 @@
 
 
 <script setup >
-// Create 10 slides
-const containerRef = ref(null)
-const slides = ref(Array.from({ length: 10 }))
+import { usePayment } from  '@/store/payment'
 
-const props = defineProps({
-    data: {
-        type:Array
-    }
-})
+const store = usePayment()
+const containerRef = ref(null)
+
 
 const swiper = useSwiper(containerRef)
 
 onMounted(() => {
-  // Access Swiper instance
-  // Read more about Swiper instance: https://swiperjs.com/swiper-api#methods--properties
-  console.log(swiper.instance)
+  store.Popular_recent()
+  
+
+  
 })
 </script>
 
@@ -133,77 +130,285 @@ onMounted(() => {
             </div>
           </div>
           </div>
-  <ClientOnly>
+          <!-- {{ store.recent }} -->
    
 
 
-    <swiper-container ref="containerRef" v-if="props.data">
+    <swiper-container ref="containerRef"
+    :slides-per-view="4"
+          :space-between="10">
       <swiper-slide
-        v-for="(item, idx) in props.data"
+        v-for="(item, idx) in store?.recent"
         :key="idx"
-        style="background-color: rgb(32, 233, 70); color: white;"
       >
-      <div class="dataItem">
-      
-  
-      <button class="btnBestseller">Bestseller</button>
-      <button class="newBook">Yangi</button>
-      <img
-        src="/assets/contact/booklike.png"
-        alt=""
-        class="bookLike"
-      />
- 
-      <img
-        src="/assets/contact/karzinka.png"
-        alt=""
-        class="karzinka"
-      />
-      <img
-        src="/assets/contact/eBook.png"
-        alt=""
-        class="ebook"
-      />
-    </div>
-    <div class="ps-2">
-      <small class="title">{{ item?.product?.name }}</small>
-      <pre>
- {{ item?.product }}
- 
- </pre
-      >
-    </div>
-    <div class="ps-2">
-      <small class="author">{{ item.product.author }}</small>
-      <small class="author">{{
-        item.product.description_uz
-      }}</small>
-    </div>
-    <div>
-      <small v-if="item.product.price" class="price"
-        >{{ item.product.price }} so'm</small
-      >
-    </div>
-    <img src="/assets/contact/Star.png" alt="" />
-    <small class="stats ms-2">5,0</small>
-    <span class="starsNumbers">(32)</span>
+      <div @click="$router.push(`/book/${item.id}`)" class="bookData">
+              <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
+              <button
+                :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'"
+              >
+                {{ item.is_bestseller == 1 ? "Bestseller" : "Yangi" }}
+              </button>
+              <div
+                class="likeBox"
+                @click="addFavourite($event, idx, item.id, item.type.book_id)"
+              >
+                <img
+                  src="../../assets/contact/bookLike2.png"
+                  alt=""
+                  class="bookLike2"
+                  :style="{ opacity: item.is_favorite ? '1' : '0' }"
+                />
+                <img
+                  src="../../assets/contact/booklike.png"
+                  alt=""
+                  class="bookLike"
+                  :style="{ opacity: item.is_favorite ? '0' : '1' }"
+                />
+              </div>
+              <img
+                src="../../assets/contact/karzinka.png"
+                alt=""
+                class="karzinka"
+                @click="addBasket($event, item.id, item.type.book_id)"
+              />
+              <div class="wrapper-icons">
+                <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+                <img
+                  src="../../assets/contact/bookopen.png"
+                  alt=""
+                  class="bookopen"
+                />
+                <img
+                  src="../../assets/contact/headphone.png"
+                  alt=""
+                  class="headphone"
+                />
+              </div>
+            </div>
+            <div class="ps-2">
+              <small class="title">{{ item.creator }}</small>
+            </div>
+            <div class="ps-2">
+              <small class="author">{{ item.name }}</small>
+              <small class="author"> </small>
+            </div>
+            <small class="stats ms-2">5,0</small>
+            <span class="starsNumbers">(32)</span>
       </swiper-slide>
     </swiper-container>
-  </ClientOnly>
 
   
 </template>
 
 <style lang="css">
-swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  height: 20vh;
-  font-size: 4rem;
-  font-weight: bold;
-  font-family: 'Roboto', sans-serif;
+
+
+.price {
+  color: #8f8e8e;
+  font-size: 0.8125rem;
+}
+.categoyImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.4375rem;
+}
+
+.btnBestseller {
+  background: #67c926;
+  position: absolute;
+  left: -0.3125rem;
+  top: 0.625rem;
+  border: none;
+  border-radius: 0.1875rem;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 600;
+  z-index: 1;
+  width: 4.875rem;
+  height: 1.4375rem;
+}
+
+.newBook {
+  background: #ff673d;
+  position: absolute;
+  left: -0.3125rem;
+  top: 0.625rem;
+  border: none;
+  border-radius: 0.1875rem;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 600;
+  width: 3.0625rem;
+  height: 1.4375rem;
+}
+
+.bookData {
+  position: relative;
+  height: 16.25rem;
+}
+
+.bookLike {
+  position: absolute;
+  right: 0.625rem;
+  top: 0.625rem;
+  cursor: pointer;
+  display: none;
+}
+
+.karzinka {
+  position: absolute;
+  right: 0.625rem;
+  top: 2.8125rem;
+  cursor: pointer;
+  display: none;
+}
+
+.ebook {
+  cursor: pointer;
+  display: none;
+}
+
+.bookopen {
+  cursor: pointer;
+  display: none;
+}
+
+
+.headphone {
+  cursor: pointer;
+  display: none;
+}
+
+.bookData:hover .bookLike,
+.bookData:hover .ebook,
+.bookData:hover .bookopen,
+.bookData:hover .headphone,
+.bookData:hover .karzinka {
+  display: block;
+}
+
+.bookGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
+  gap: 0.9375rem;
+}
+
+.starsNumbers {
+  color: #9196ad;
+  font-size: 0.8125rem;
+}
+
+.title {
+  font-weight: 800;
+}
+
+.author {
+  color: #9196ad;
+}
+
+.activeCategory {
+  color: blue !important;
+}
+
+.bookTypeRequest {
+  cursor: pointer;
+}
+
+.dataItem {
+  box-shadow: 0px 2px 4px 0px #dbdbdb40;
+  border-radius: 0 0 7px 7px;
+  height: 260px;
+}
+
+.btnBestseller {
+  background: #67c926;
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
+  z-index: 1;
+  width: 78px;
+  height: 23px;
+}
+
+.newBook {
+  background: #ff673d;
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
+  width: 49px;
+  height: 23px;
+}
+
+.karzinka {
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  cursor: pointer;
+  display: none;
+}
+
+
+.ebook {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
+
+.bookDataa:hover .bookLike,
+.bookDataa:hover .ebook,
+.bookDataa:hover .karzinka {
+  display: block;
+}
+
+.title {
+  font-weight: 1000;
+  color: black;
+}
+
+.author {
+  color: #5b5e6d;
+  font-weight: 600;
+}
+
+.bookLike {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  display: none;
+}
+
+.categoyImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+}
+
+.aboutMenu div:hover {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.bookTypeActive {
+  border: 1px solid #41a2db !important;
+  color: #41a2db !important;
+}
+.price {
+  color: black;
+  font-weight: 800;
 }
 
 

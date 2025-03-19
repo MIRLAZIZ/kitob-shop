@@ -46,7 +46,7 @@
   width: 524px;
   height: auto;
   padding: 60px 30px;
-  background-image: url('../../assets/contact/peymentBacground.png');
+  background-image: url('/assets/contact/peymentBacground.png');
   background-size: 100% 100%;
 }
 

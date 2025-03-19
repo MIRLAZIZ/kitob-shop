@@ -182,7 +182,7 @@
                 src="/assets/contact/karzinka.png"
                 alt=""
                 class="karzinka"
-                @click="basketAdd($event, item.id, item.type.length)"
+                @click.stop="basketAdd( item.id, item.type.length)"
               />
               <div class="wrapper-icons">
                 <img
@@ -221,8 +221,8 @@
         </div>
 
 
-        <UiCarousel/>
-       
+        <!-- <UiCarousel/> -->
+         <HomeMarketFast :bookImgs="store1.recent" :title="$t('home.recently')"/>       
       </div>
 
     </div>
@@ -243,8 +243,7 @@ let type_book = ref("all");
 
 
 
-const basketAdd = (e, id, type) => {
-  e.stopPropagation();
+const basketAdd = (id, type) => {
   storeBasket
     .basketAdd({ product_id: id, type: type ? "book" : "product" })
     .then(() => {
@@ -347,6 +346,8 @@ onMounted(() => {
     oBarMinValue.value,
     oBarMaxValue.value
   );
+  store1.Popular_recent()
+
 
 
 
@@ -611,3 +612,70 @@ const selectBook = (id) => {
   font-weight: 800;
 }
 </style>
+
+
+
+
+
+
+
+
+
+<!-- {
+  "id": 2,
+  "name": "Tafsir Hilol",
+  "user_id": 1,
+  "translation_id": null,
+  "image": "\/storage\/cover\/2023-05\/8Id0bW22pXfAByDl7Qwx.png",
+  "fragment": null,
+  "audio": null,
+  "ebook": null,
+  "description": "<p>qwerty<\/p>",
+  "year": "2017",
+  "publishing_house": "Hilol Nashr",
+  "edition": "Qayta",
+  "age_access": null,
+  "isbn": "978-",
+  "number_of_pages": 107,
+  "genre_id": null,
+  "content": "O'lcham: x",
+  "status": "active",
+  "is_new": 1,
+  "lang": "oz",
+  "is_bestseller": 1,
+  "full_path": null,
+  "created_at": "2023-03-23T07:39:46.000000Z",
+  "updated_at": "2023-05-17T11:46:31.000000Z",
+  "subtitle": null,
+  "step": 0,
+  "creator": "",
+  "cover": null,
+  "uuid": "",
+  "original_file_name": null,
+  "reviews_count": 1,
+  "type": [
+      {
+          "id": 3,
+          "book_id": 2,
+          "user_id": 1,
+          "quantity": 120,
+          "sort": 2,
+          "cover": null,
+          "file_type": null,
+          "file_path": "\/storage\/audiobook\/2023-10\/wBsxjo9OuuEPyK7IhfM2.mp3",
+          "file_fragment": "\/storage\/audiobook\/2023-10\/wBsxjo9OuuEPyK7IhfM2.mp3",
+          "price": 1000,
+          "created_at": "2023-03-30T09:27:14.000000Z",
+          "updated_at": "2023-08-07T07:23:14.000000Z",
+          "lcp": null,
+          "content_id": null,
+          "owner_price": 1000,
+          "quantity_rest": 89,
+          "status": "active",
+          "fee": 20,
+          "income_id": null,
+          "type": "audio",
+          "weight": 0,
+          "discount": null,
+          "is_paid": 0
+      }, -->

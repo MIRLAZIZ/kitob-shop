@@ -1,3 +1,11 @@
+
+let translator = null
+export const tranlateFunction = (tranlate) => {
+    translator = tranlate
+}
+
+
+
 // email validation
 export const validateEmail = (emailValue) => {
 
@@ -5,7 +13,7 @@ export const validateEmail = (emailValue) => {
     if (email && !isValidEmail(email)) {
         return {
             item: false,
-            message: 'Email manzili noto\'g\'ri formatda'
+            message: translator('validation.invalid_email')
         }
     }
     else {
@@ -19,16 +27,21 @@ export const validateEmail = (emailValue) => {
     };
 }
 
+
+
+
 const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
+
+
 
 // 👉 item Validator
 export const isEmpty = (value, key) => {
     if (value === null || value === undefined || value === '') {
         return {
             item: false,
-            message: `${key} maydonini to'ldirish shart`
+            message: translator('validation.required',{field: key} )
         }
 
     }
@@ -41,33 +54,35 @@ export const isEmpty = (value, key) => {
 
 
 // max and min length
-export const validateLength = (value, minLength, maxLength, key) => {
+export const validateLength = (value, key, minLength, maxLength) => {
     const length = String(value).trim().length;
-    if (value) {
-        if (length < minLength) {
-            return {
-                item: false,
-                message: `${key} maydoni kamida ${minLength} belgidan iborat bo'lishi kerak`
-            };
-        } else if (length > maxLength) {
-            return {
-                item: false,
-                message: `${key} maydoni maksimal uzunlik ${maxLength} belgidan iborat bo'lishi kerak`
-            };
-        }
+
+
+    if (length < minLength) {
 
         return {
-            item: true,
-            message: null
+            item: false,
+            message: translator('validation.min_length',{field: key, min: minLength})
         };
-    }
-    else {
+    } else if (length > maxLength) {
         return {
-            item: true,
-            message: null
+            item: false,
+            message: translator('validation.max_length',{field: key, max: maxLength})
         };
-
     }
+
+    return {
+        item: true,
+        message: null
+    };
+
+    // else {
+    //     return {
+    //         item: true,
+    //         message: null
+    //     };
+
+    // }
 
 }
 
@@ -82,7 +97,7 @@ export const passwordValidator = password => {
     if (!validPassword) {
         return {
             item: false,
-            message: 'Field must contain at least one uppercase, lowercase, special character and digit with min 8 chars'
+            message: translator('validation.weak_password')
         }
     }
     else {
@@ -98,7 +113,7 @@ export const confirmedValidator = (value, target) => {
     if (value != target) {
         return {
             item: false,
-            message: 'The Confirm Password field confirmation does not match'
+            message: translator('validation.password_mismatch')
         }
 
     }
@@ -111,7 +126,9 @@ export const confirmedValidator = (value, target) => {
 
 export const validation = (massiv) => {
     return massiv.every(element => element.item === true);
-}
+}   
+
+
 
 
 
