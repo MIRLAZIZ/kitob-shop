@@ -3,7 +3,13 @@
 
         <label for="" class=" mb-1">{{ $t(props.title) }}<span>*</span></label>
         <div class="d-flex align-items-center border bg-white rounded">
-            <span class="ms-2 small">+998</span> <input v-maska data-maska="## ### ## ##" v-model="phone" type="text" class="form-control border-0 shadow-none" :placeholder="$t('home.enternum')" autocomplete="off" />
+            <span class="ms-2 small">+998</span> 
+            <ClientOnly>
+
+
+              <input v-maska data-maska="## ### ## ##" v-model="phone" type="text" class="form-control border-0 shadow-none" :placeholder="$t('home.enternum')" autocomplete="off" />
+            </ClientOnly>
+            
 
         </div>
         <small v-if="errorTel" class="text-danger">{{
@@ -22,7 +28,8 @@ import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
   title: {
-    type:String
+    type:String,
+     default: ''
   }
 })
 
