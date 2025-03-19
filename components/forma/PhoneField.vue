@@ -60,3 +60,9 @@ defineExpose({validatesiyPhone})
 
 </script>
 
+<style scoped>
+
+
+
+</style>
+
