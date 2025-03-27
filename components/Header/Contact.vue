@@ -7,19 +7,9 @@
           <div class="col-5 d-flex justify-content-between">
             
             <div class="d-flex align-items-center">
-              <label for="locale-select" class="me-1">
-                <img src="~assets/contact/solar_global-bold.png" alt=""
-              /></label>
-              <select
-                id="locale-select"
-                v-model="$i18n.locale"
-                @change="changeLanuage"
-              >
-                <option value="uz">O'zbek</option>
-                <option value="ru">
-                  Ruscha
-                </option>
-              </select>
+
+              <HeaderLocales/>
+             
             </div>
 
             <a href="#">
@@ -35,9 +25,7 @@
   </div>
 </template>
 <script setup>
-const changeLanuage = (e) => {
-  localStorage.setItem("language", e.target.value);
-};
+
 </script>
 
 <style>

@@ -1,321 +1,302 @@
 <template>
-  <div class="d-flex">
-    <div class="main">
-      <img class="main_img" src="../../assets/register/kytab.png" alt="" />
-      <img class="main_imgs" src="../../assets/register/password.png" alt="" />
-    </div>
-    <div class="container">
-      <div>
-        <select
-          class="section_select border-b-[4px] p-3 hover:border-blue-600 text-body"
-          name=""
-          id=""
-        >
-          <option value="">O'zbekcha</option>
-          <option value="">Rus</option>
-          <option value="">English</option>
-          <option value="">Kareys</option>
-          <option value="">Japan</option>
-        </select>
+  <div class="row">
+
+    <div class="main px-5 py-4 col ">
+      <img class="main_img" src="/assets/register/kytab.png" alt="" @click="$router.push('/')" />
+      <div class="d-flex justify-content-center">
+        <img class="main_imgs" src="/assets/register/password.png" alt="" />
+
       </div>
-      <div class="wrapper">
-        <div class="section_list">
-          <h1>Parolni tiklash</h1>
-          <h2>Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling</h2>
+    </div>
+
+
+    <div class="col px-5 py-4">
+
+      <div class="d-flex justify-content-end">
+        <Locales />
+
+      </div>
+
+
+
+      <div>
+        <div class="">
+          <h3>Parolni tiklash</h3>
+          <small>Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling</small>
         </div>
+
+
         <!-- PAGE 1 -->
-        <div v-show="content == 1">
-          <div class="mb-3 mt-3 list">
-            <label for="tel" class="form-label"
-              >Telefon raqam <span>*</span></label
-            >
-            <input
-              v-model="telNumber"
-              type="number"
-              class="form-control"
-              placeholder="998 00 000 00 00"
-              v-maska
-              data-maska="############"
-            />
-            <span v-if="errorTel" style="color: red">{{
-              errorTel.message
-            }}</span>
-          </div>
-          <button @click="senDataUser1">Davom etish</button>
-          <div class="bottom">
-            <h2>
-              Avval ro'yhatdan o'tganmisiz?
-              <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
-            </h2>
-          </div>
+        <div v-if="content == 1">
+        
+
+            <FormaPhoneField v-model="telNumber" :title="'home.phone'" ref="telNumberref" />
+    
+          <button @click="senDataUser1" class="mt-3">Davom etish</button>
+
         </div>
+
+
+
         <!-- PAGE 2 -->
-        <div v-show="content == 2">
-          <div class="mb-3 mt-3 list">
-            <label for="email" class="form-label"
-              >Tasdiqlash kodi: <span>+998 97 589 53 69 </span> telefon raqamga
-              yubordik</label
-            >
-            <input
-              v-model="code"
-              type="number"
-              class="form-control"
-              placeholder="sms codini kiritng"
-            />
-            <span v-if="errorCode" style="color: red">
-              {{ errorCode.message }}
-            </span>
-          </div>
-          <button @click="senDataUser2">Davom etish</button>
-          <div class="bottom">
-            <h2>
-              Avval ro'yhatdan o'tganmisiz?
-              <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
-            </h2>
-          </div>
+        <div v-if="content == 2">
+         
+
+
+            <label for="email" class="form-label">Tasdiqlash kodi: <span class="mx-1">{{
+              formatPhoneNumber(userPhoneData?.phone) }} </span> telefon raqamga
+              yubordik </label>
+
+
+            <FormaSmsCode v-model="code" />
+
+            <div class="my-1 text-danger">
+              {{ errorCode }}
+            </div>
+
+            <div class="mt-2">
+              <p v-if="isCounting"> {{ time }} soniya dan so’ng takroran yuborish
+              </p>
+              <p @click="senDataUser1" class="codeAgain" v-else>Ko’dni takroran yuborish</p>
+            </div>
+
+
+         
         </div>
+
+
+
+        
         <!-- Page 3 -->
-        <div v-show="content == 3">
-          <div class="mb-3 mt-3 list">
-            <label for="password" class="form-label"
-              >Parol <span>*</span></label
-            >
-            <input
-              class="form-control"
-              type="password"
-              placeholder="Yangi parol"
-              v-model="password"
-            />
-            <span v-if="passwordError" style="color: red">{{
-              passwordError.message
-            }}</span>
-          </div>
-          <div class="mb-3 mt-3 list">
-            <label class="form-label">Parol <span>*</span></label>
-            <input
-              class="form-control"
-              type="password"
-              placeholder="Yangi parolni takrorlang"
-              v-model="confirm_password"
-            />
-            <span v-if="confirm_passwordError" style="color: red">{{
-              confirm_passwordError.message
-            }}</span>
-          </div>
+        <div v-if="content == 3">
+
+
+         
+            <FormaPasswordField v-model="generatepasword.password" ref="passwordref" class="mt-3" />
+       
+         
+
+            <FormaConfirmPassword v-model="generatepasword.confirm_password" :password="generatepasword.password"
+              ref="confirmPasswordref" class="my-3" />
+
+        
           <button @click="senDataUser3">Yangi parolni o'rnatish</button>
-          <div class="bottom">
-            <h2>
-              Avval ro'yhatdan o'tganmisiz?
-              <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
-            </h2>
-          </div>
+
         </div>
+
+
+
+       <div  class="mt-2">
+         <small>
+           Avval ro'yhatdan o'tganmisiz?
+           <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
+         </small>
+       </div>
       </div>
     </div>
   </div>
 </template>
-  
+
 <script setup>
-// Validatsiya
+import { useI18n } from 'vue-i18n';
+
 
 const store = useLogin();
-const forget = ref({
-  phone: null,
-});
-const checkforget = ref({
-  code: null,
-  phone: null,
-});
-
+const storeNotfy = useNotification()
+const { t } = useI18n()
+const time = ref(40)
+let interval = null
+const isCounting = ref(false)
+const errorCode = ref(null)
 const telNumber = ref(null);
-const errorTel = ref(null);
+const telNumberref = ref(null)
+const userPhoneData = ref(null)
+const passwordref = ref(null)
+const router = useRouter()
+const confirmPasswordref = ref(null)
 
 const code = ref(null);
-const errorCode = ref(null);
 
 const generatepasword = ref({
   password: null,
   confirm_password: null,
 });
 
-const password = ref(null);
-const passwordError = ref(null);
+let content = ref(3);
 
-const confirm_password = ref(null);
-const confirm_passwordError = ref(null);
 
-let content = ref(1);
+const validatsiyaArray = ref([])
 
-watch(telNumber, (newValue) => {
-  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
-    ? isEmpty(newValue, "Telifon nomeri")
-    : validateLength(newValue, 12, 12, "telfon nomeri");
-});
 
 watch(code, (newValue) => {
-  errorCode.value = !isEmpty(newValue, "Sms codi").item
-    ? isEmpty(newValue, "Sms codi")
-    : validateLength(newValue, 6, 6, "sms codi");
-});
+  if (newValue.length >= 6) {
+    senDataUser2()
 
-watch(password, (newValue) => {
-  passwordError.value = passwordValidator(newValue);
-});
-watch(confirm_password, ( conf) => {
-  confirm_passwordError.value = confirmedValidator(password.value, conf);
-});
+  }
+})
+
+
+
+
+const startTime = () => {
+  isCounting.value = true;
+  time.value = 40;
+
+  interval = setInterval(() => {
+    if (time.value > 0) {
+      time.value--;
+    } else {
+      clearInterval(interval);
+      isCounting.value = false; // Tugma faollashadi
+    }
+  }, 1000);
+};
+
+
+
+
+const handleCustomEvent = () => {
+
+  validatsiyaArray.value = [];
+
+
+  if (telNumberref.value) {
+
+    let phoneFild = telNumberref.value.validatesiyPhone()
+    validatsiyaArray.value.push(phoneFild)
+
+  }
+
+
+
+  if (passwordref.value) {
+    let passwordfild = passwordref.value.validatsiyaPassword()
+    validatsiyaArray.value.push(passwordfild)
+  }
+  if (confirmPasswordref.value) {
+    let confirmPassword = confirmPasswordref.value.validationConfirmPassword()
+    validatsiyaArray.value.push(confirmPassword)
+
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 const senDataUser1 = () => {
-  errorTel.value = validateLength(telNumber.value, 12, 12, "telfon nomeri");
-  let array = [errorTel.value];
-  let validtaionDAta = validation(array);
-  forget.value.phone = telNumber.value;
-  if (telNumber.value && validtaionDAta) {
+
+
+  handleCustomEvent()
+  let validationData = validation(validatsiyaArray.value)
+
+  if (validationData) {
+    let data = {
+      phone: 998 + telNumber.value.replace(/\s/g, "")
+    }
     store
-      .forgetPassword(forget.value)
-      .then(() => {
+      .forgetPassword(data)
+      .then((res) => {
+        userPhoneData.value = res.result
         content.value = 2;
+        startTime()
+
       })
       .catch((error) => {
-        useNuxtApp().$toast.error(error.response._data.message, {
-          autoClose: 2000,
-          dangerouslyHTMLString: true,
-        });
+        storeNotfy.errorData(error.response._data.errors)
       });
   } else {
-    errorTel.value = !isEmpty(telNumber.value, "Telifon nomeri").item
-      ? isEmpty(telNumber.value, "Telifon nomeri")
-      : validateLength(telNumber.value, 12, 12, "telfon nomeri");
+    storeNotfy.errorToast(t('order.required_field'))
+
   }
 };
 
+
+
+
 const senDataUser2 = () => {
-  errorCode.value = validateLength(code.value, 6, 6, "sms codi");
-  let array2 = [errorCode.value];
-  let validtaioncode = validation(array2);
-  checkforget.value.code = code.value;
-  checkforget.value.phone = telNumber.value;
-  if (validtaioncode && code.value) {
-    store.checkforgetpassword(checkforget.value).then((res) => {
-      if (res.error) {
-        useNuxtApp().$toast.error(res.message, {
-          autoClose: 2000,
-          dangerouslyHTMLString: true,
-        });
-      } else {
-        localStorage.setItem("jwtToken", res.result.token);
-        localStorage.setItem("refreshToken", res.result.refresh_token);
-        content.value = 3;
-      }
-    });
-  } else {
-    errorCode.value = !isEmpty(code.value, "Sms codi").item
-      ? isEmpty(code.value, "Sms codi")
-      : validateLength(code.value, 6, 6, "sms codi");
+  let data = {
+    code: code.value,
+    phone: 998 + telNumber.value.replace(/\s/g, "")
+
   }
+
+
+  store.checkforgetpassword(data).then((res) => {
+    if (res.error) {
+      errorCode.value = res
+
+    } else {
+
+
+      localStorage.setItem('userData', JSON.stringify(res.result.user_data))
+      localStorage.setItem('userFullName', res.result.user_data.full_name)
+      localStorage.setItem('type', res.result.user_data.type)
+
+      localStorage.setItem("jwtToken", res.result.token);
+      localStorage.setItem("refreshToken", res.result.refresh_token);
+      content.value = 3;
+    }
+  }).catch(error => {
+
+    errorCode.value = error.response._data.message
+
+  })
+
 };
 
 const senDataUser3 = () => {
-  generatepasword.value.password = password.value;
-  generatepasword.value.confirm_password = confirm_password.value;
-  console.log(confirm_passwordError.value.item);
-  if (confirm_passwordError.value.item) {
+
+
+  handleCustomEvent()
+  let validationData = validation(validatsiyaArray.value)
+  if (validationData) {
     store.changepassword(generatepasword.value)
+      .then(() => {
+        storeNotfy.succesToast(t("order.successful"))
+        router.push('/')
+
+
+      }).catch(error => {
+        storeNotfy.errorData(error.response._data.errors)
+      })
   }
-  
+
 };
+
+function formatPhoneNumber(number) {
+  if (!number) return '';
+  return number.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5');
+}
+
+
+
 </script>
-  
-  <style lang="scss" scoped>
+
+<style lang="scss" scoped>
 .main {
-  width: 55%;
-  height: 900px;
-  border-radius: 0px, 50px, 50px, 0px;
   background-color: #e2f4ff;
+  height: 100vh;
+  border-bottom-right-radius: 50px;
 }
+
 .main_img {
-  width: 169.67px;
-  height: 58.48px;
-  top: 40px;
-  left: 60px;
-  border-radius: 146.21px;
-  margin: 60px 500px 80px 100px;
+  cursor: pointer;
 }
-.main_imgs {
-  width: 500px;
-  height: 500px;
-  top: 200px;
-  left: 136px;
-  margin: 0px 236px 200px 270px;
-}
-
-.section_select {
-  width: 130px;
-  height: 60px;
-  margin: 40px 30px 44px 680px;
-  border: none;
-}
-.section_select option {
-  font-weight: 600;
-  font-size: 16px;
-}
-.wrapper {
-  // background-color: red;
-  width: 70%;
-  margin: 0px 0px 0px 60px;
-}
-.section_list h1 {
-  width: 227px;
-  height: 36px;
-  top: 120px;
-  left: 832px;
-  font-family: Manrope;
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 36px;
-  letter-spacing: 0.02em;
-  text-align: left;
-  color: #323232;
-  margin: 0px 381px 4px 0px;
-}
-.section_list h2 {
-  width: 410px;
-  height: 19px;
-  top: 160px;
-  left: 832px;
-  font-family: Manrope;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: left;
-  color: #a3acb5;
-  margin: 0px 0px 30px 0px;
-}
-
 label {
-  width: 100%;
-  height: 18px;
-  top: 471px;
-  left: 832px;
-  font-family: Manrope;
   font-size: 14px;
   font-weight: 700;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
   color: #323232;
   margin: 20px 0px 10px 0px;
 }
-label span {
-  color: #e93c3c;
-  font-size: 15px;
-  font-weight: 900;
-}
-.list {
-  margin: 0px 0px 30px 0px;
-  padding: 0px;
-}
+
 button {
   width: 100%;
   background-color: #1c5793;
@@ -323,53 +304,13 @@ button {
   border: none;
   border-radius: 10px;
   color: white;
-}
-.bottom {
-  width: 100%;
-  height: 307px;
-  top: 752px;
-  left: 832px;
-  border: 1px;
-  margin: 20px 0px 0px 0px;
-}
-.bottom h2 {
-  width: 298px;
-  height: 19px;
-  top: 770px;
-  left: 832px;
-  font-family: Manrope;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: center;
+} 
 
-  font-family: TT Commons;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0.02em;
-  text-align: center;
-  // color: #35363D
-}
 .NuxtLink {
   color: #1c5793;
 }
-.li {
-  display: flex;
-  justify-content: space-between;
-}
-
-.li a {
-  width: 132px;
-  height: 18px;
-  top: 557px;
-  left: 1248px;
-  font-family: Manrope;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #41a2db;
+.codeAgain {
+  color: #307CCE;
+  cursor: pointer;
 }
 </style>

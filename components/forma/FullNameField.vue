@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="" class="processingLabel mb-1">{{ $t(props.title) }}<span>*</span></label>
+    <label  class=" mb-1">{{ $t(props.title) }}<span class="text-danger">*</span></label>
     <input v-model="full_name" type="text" class="form-control shadow-none" :placeholder="$t(props.title)" />
 
     <small v-if="full_name_error" style="color: red">{{
@@ -70,4 +70,3 @@ defineExpose({validationFullName})
 
 </script>
 
-<style scoped></style>

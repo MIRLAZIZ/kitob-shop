@@ -72,7 +72,7 @@ const closeModal = () => {
 
 
 const start = () => {
-    emit("allData");
+    
 
     let phone = 998 + props.phone.replace(/\s/g, "");
 
@@ -80,21 +80,42 @@ const start = () => {
     phone: Number(phone),
     code: 585843
   }
+  store.Order_Forget(guest)
+      .then(()=>{
+          localStorage.setItem('jwtToken',store.forget.token);
+          localStorage.setItem('refreshToken',store.forget.refresh_token);
+          localStorage.setItem('type', store.forget.user_data.type)
+          localStorage.setItem("phone", store.forget.user_data.phone)
+          emit("allData");
+
+      }).catch(error =>  {
+
+      })
 
 
-//   store.Order_Forget(guest)
-  
-//     .then(() => {
-//       localStorage.setItem('jwtToken', store.forget.token);
-//       localStorage.setItem('refreshToken', store.forget.refresh_token);
-//       localStorage.setItem('type', store.forget.user_data.type)
-//       localStorage.setItem("phone", store.forget.user_data.phone)
-
-     
-//       console.log('al ishladi')
-//     });
 
 }
+
+
+
+// const start=()=>{
+//   let guest = {
+//     phone:Payment.value.phone,
+//     code:Payment.value.sms
+//   }
+//       store.Order_Forget(guest)
+//       .then(()=>{
+//           localStorage.setItem('jwtToken',store.forget.token);
+//           localStorage.setItem('efreshToken',store.forget.refresh_token);
+//           localStorage.setItem('type', store.forget.user_data.type)
+//           localStorage.setItem("phone", store.forget.user_data.phone)
+
+//           al()
+//           console.log('al ishladi')
+//       });
+      
+//  }
+
 
 
 

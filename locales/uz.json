@@ -167,7 +167,18 @@
   "order": {
     "full_name": "Ism familiya",
     "form_not": "Iltimos, barcha kerakli maydonlarni to‘ldiring!",
-    "success": "Buyurtmangiz rasmiylashtirildi!"
+    "success": "Buyurtmangiz rasmiylashtirildi!",
+    "enter_password": "Parol kiriting",
+    "login": "Tizimga kirish",
+    "access_books": "Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling",
+    "forgot_password": "Parolni unutdingizmi?",
+    "registred": "Avval ro'yhatdan o'tganmisiz?",
+    "sign_up": "Ro'yxatdan o'tish",
+    "required_field": "Bo'sh  maydonlarni to'ldiring!",
+    "successful": "Muvaffaqiyatli"
+
+
+
     
 
 

@@ -22,9 +22,7 @@ export class FechData {
           ...data
         }
       })
-      // .catch(error => {
-      //   console.log('eror');
-      // })
+     
   }
   // Delete
   delate = (id) => {

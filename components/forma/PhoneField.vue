@@ -1,13 +1,13 @@
 <template>
     <div>
 
-        <label for="" class=" mb-1">{{ $t(props.title) }}<span>*</span></label>
+        <label  class=" mb-1">{{ $t(props.title) }}<span class="text-danger">*</span></label>
         <div class="d-flex align-items-center border bg-white rounded">
             <span class="ms-2 small">+998</span> 
             <ClientOnly>
 
 
-              <input v-maska data-maska="## ### ## ##" v-model="phone" type="text" class="form-control border-0 shadow-none" :placeholder="$t('home.enternum')" autocomplete="off" />
+              <input v-maska data-maska="## ### ## ##" v-model="phone" type="text" class="form-control  border-0 shadow-none " :placeholder="$t('home.enternum')" autocomplete="off" />
             </ClientOnly>
             
 
@@ -39,7 +39,9 @@ const errorTel = ref(null)
 
 
 watch(phone, (newValue) => {
+  if(newValue) {
     errorTel.value = validateLength(newValue, t(props.title), 12, 12, );
+  }
 },
 );
 
@@ -52,17 +54,6 @@ const validatesiyPhone = () => {
 defineExpose({validatesiyPhone})
 
 
-
-
-
-
-
-
 </script>
 
-<style scoped>
-
-
-
-</style>
 
