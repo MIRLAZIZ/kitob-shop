@@ -4,7 +4,6 @@
     "favorites": "Избранное",
     "profile": "Профиль",
     "search": "поиск книг...",
-
     "menu": {
       "allBooks": "Все книги",
       "elecBook": "Электронная книга",
@@ -85,7 +84,6 @@
     "entername": "Введите ваше имя",
     "enternum": "Введите свой номер телефона",
     "enteraddress": "Введите свой адрес",
-    
     "basket": {
       "product": "продукта",
       "select": "Выбрать все",
@@ -102,39 +100,40 @@
       "interested": "Вам может быть интересно"
     },
     "profile": {
-      "Notification":"Уведомление",
-      "Order history":"История заказов",
-      "My books":"Мои книги",
-      "Profile settings":"Настройки профиля",
-      "Exit":"Выход",
-      "Installment payment":"Рассрочка платежа",
-      "Delivered":"Доставленный",
-      "cash payment":"Наличный расчет",
-      "Act number":"Номер акта",
-      "Date of order":"Дата заказа",
-      "Total":"Общий",
-      "Paid":"Оплаченный",
-      "Residual":"Остальные",
-      "Status":"Положение дел",
-      "Order number":"Номер заказа",
-      "Cost":"Расходы",
-      "Your book is stored in the buyer":"Ваша книга хранится в покупателе",
-      "Choose books in our store and read them on any device":"Выбирайте книги в нашем магазине и читайте их на любом устройстве",
-      "Homepage":"Домашняя страница",
-      "personal information":"персональная информация",
-      "first name last name":"имя Фамилия",
-      "Date of birth":"Дата рождения",
-      "Phone number":"",
-      "sex":"секс",
-      "Address":"Адрес",
-      "Cancellation":"Отмена",
-      "Save changes":"Сохранить изменения",
-      "change password":"изменить пароль",
-      "Current password":"Текущий пароль",
-      "New Password":"Новый пароль",
-      "Electronic book":"Электронная книга",
-      "Audio book":"Аудиокнига",
-      "There are no new notifications":"Новых уведомлений нет"
+      "Notification": "Уведомление",
+      "Order history": "История заказов",
+      "My books": "Мои книги",
+      "Profile settings": "Настройки профиля",
+      "Exit": "Выход",
+      "Installment payment": "Рассрочка платежа",
+      "Delivered": "Доставленный",
+      "cash payment": "Наличный расчет",
+      "Act number": "Номер акта",
+      "Date of order": "Дата заказа",
+      "Total": "Общий",
+      "Paid": "Оплаченный",
+      "Residual": "Остальные",
+      "Status": "Положение дел",
+      "Order number": "Номер заказа",
+      "Cost": "Расходы",
+      "Your book is stored in the buyer": "Ваша книга хранится в покупателе",
+      "Choose books in our store and read them on any device": "Выбирайте книги в нашем магазине и читайте их на любом устройстве",
+      "Homepage": "Домашняя страница",
+      "personal information": "персональная информация",
+      "first name last name": "имя Фамилия",
+      "Date of birth": "Дата рождения",
+      "Phone number": "",
+      "sex": "секс",
+      "Address": "Адрес",
+      "Cancellation": "Отмена",
+      "Save changes": "Сохранить изменения",
+      "change password": "изменить пароль",
+      "Current password": "Текущий пароль",
+      "New Password": "Новый пароль",
+      "Electronic book": "Электронная книга",
+      "Audio book": "Аудиокнига",
+      "There are no new notifications": "Новых уведомлений нет",
+      "login": "Войти"
 
     }
   },
@@ -152,11 +151,7 @@
     "blog": "Блог",
     "recipes": "Рецепты",
     "contacts": "Контакты"
-
   },
-
-
-  
   "validation": {
     "invalid_email": "Неправильный формат электронной почты",
     "required": "Поле {field} обязательно для заполнения",
@@ -169,14 +164,38 @@
     "full_name": "Полное имя",
     "form_not": "Пожалуйста, заполните все обязательные поля!",
     "success": "Ваш заказ обработан!",
-     "enter_password": "Введите пароль",
-     "login": "Авторизоваться",
-     "access_books": "Войдите и получите доступ к более чем 1280 книгам",
-     "forgot_password": "Забыли пароль?",
-     "registred": "Вы уже зарегистрировались?",
-     "sign_up": "Зарегистрироваться",
-     "required_field": "Заполните пропуски!",
-     "successful": "Успешный"
+    "enter_password": "Введите пароль",
+    "login": "Авторизоваться",
+    "access_books": "Войдите и получите доступ к более чем 1280 книгам",
+    "forgot_password": "Забыли пароль?",
+    "registred": "Вы уже зарегистрировались?",
+    "sign_up": "Зарегистрироваться",
+    "required_field": "Заполните пропуски!",
+    "successful": "Успешный",
+    "password_recovery": "Восстановление пароля",
+    "continue": "Продолжать",
+    "new_password": "Установить новый пароль",
+    "confirmation_code": "Код подтверждения:",
+    "sent_phone_number": "oтправлено на ваш номер телефона.",
+    "resubmit_code": "Отправить код повторно",
+    "resend_seconds": "переслать через несколько секунд",
+    "catalog": "Каталог",
+    "best_seller": "Бестселлер",
+    "celebrities": "Знаменитости",
+    "special_offers": "Специальные предложения",
+    "looking_book": "Ищу книгу......",
+    "search_history": "История поиска",
+    "popular_searches": "Популярные поисковые запросы",
+    "download": "Скачать",
+    "no_information": "Нет информации",
+    "fovorite_books": "Ваши любимые книги будут здесь.",
+    "see_section": "Смотрите раздел",
+    "Cart_empty": "Корзина пуста"
+
+    
+
+
+
 
 
 

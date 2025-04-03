@@ -107,7 +107,7 @@
 
 
           <!-- yetgazib berish  -->
-          <div class="delevryAdress">
+          <div class="delevryAdress" v-if="bookData.type">
             <div class="d-flex">
               <div class="processingNumber">3</div>
               <p class="yourData ms-2">{{ $t("home.deliverTime") }}</p>
@@ -148,14 +148,12 @@
         </div>
 
 
-
-
         <!-- buyurtma haqida -->
         <div class="yourOrderContainer   ">
           <p class="yourOrder">{{ $t("home.basket.order") }}</p>
           <div class="d-flex justify-content-between orderAbout">
-            <p>{{ $t("home.basket.books") }} (1)</p>
-            <p>{{ bookData?.price }} {{ $t("home.basket.sum") }} </p>
+            <p>{{ $t("home.basket.books") }} ({{ bookData?.bookCount }})</p>
+            <p>{{ bookData?.totalPrice }} {{ $t("home.basket.sum") }} </p>
 
           </div>
 
@@ -171,7 +169,7 @@
           <hr />
           <div class="d-flex justify-content-between orderTotal">
             <p>{{ $t("home.basket.total") }}</p>
-            <p>{{ bookData?.price + store?.delivery[deleverIndex]?.price }} {{ $t("home.basket.sum") }}</p>
+            <p>{{ bookData?.totalPrice + store?.delivery[deleverIndex]?.price }} {{ $t("home.basket.sum") }}</p>
           </div>
 
 
@@ -264,7 +262,7 @@ const usertype = ref(null)
 const price = ref(null)
 const delevireyAdress = ref(null)
 const productBook = ref(null)
-const bookData = ref(null)
+const bookData = ref([])
 const deleverIndex = ref(0)
 
 
@@ -317,11 +315,12 @@ const handleCustomEvent = () => {
 }
 
 
+
 onMounted(() => {
   let product = localStorage.getItem("Product")
   productBook.value = JSON.parse(product)
   usertype.value = localStorage.getItem("type")
-  bookData.value = JSON.parse(localStorage.getItem('bookData'))[0]
+  bookData.value = JSON.parse(localStorage.getItem('bookData'))
 
 
   store.Order_delivery()

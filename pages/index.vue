@@ -2,8 +2,8 @@
   <main>
     <HomeCarousel />
     <HomePossibilities />
-    <HomeMarketFast :title="'Bozori chaqqon'" :bookImgs="store.books.special_offer" :swiperDley="6000"/>
-    <HomeMarketFast :title="'Mashhurlar'" :bookImgs="store.books.salable" :swiperDley="5000" />
+    <HomeMarketFast :title="'order.best_seller'" :bookImgs="store.books.special_offer" :swiperDley="6000"/>
+    <HomeMarketFast :title="'order.celebrities'" :bookImgs="store.books.salable" :swiperDley="5000" />
     <HomeMarketFast :title="'Maxsus taklif'" :bookImgs="store.books.popular " :swiperDley="8000" />
     <HomeMobileApp />
 

@@ -5,28 +5,19 @@
         <div class="col-3">
           <div class="footer-widget">
             <div class="footer-title">
-              <img
-                src="../assets/contact/footerLogo.png"
-                alt=""
-                class="footerLogo"
-              />
+              <img src="../assets/contact/footerLogo.png" alt="" class="footerLogo" />
               <span class="ms-2">kytab</span>
             </div>
 
-            <small
-              >{{ $t('footer.text') }}</small
-            >
+            <small>{{ $t('footer.text') }}</small>
             <div>
-              <img
-                src="../assets/contact/footerAppstore.png"
-                alt=""
-                class="mt-3"
-              />
-              <img
-                src="../assets/contact/footerPlaymarket.png"
-                alt=""
-                class="mt-3 ms-2"
-              />
+              <a href=""> <img src="../assets/contact/footerAppstore.png" alt="" class="mt-3" /></a>
+
+              <a href="https://play.google.com/store/apps/details?id=org.alilm.kitab&hl=uz&pli=1" target="_blanc">
+
+                <img src="../assets/contact/footerPlaymarket.png" alt="" class="mt-3 ms-2" />
+              </a>
+
             </div>
           </div>
         </div>
@@ -70,16 +61,12 @@
             <div class="footer-title">{{ $t('footer.contacts') }}</div>
             <p class="contactData">
               <img src="@/assets/contact/footerTelifon.png" alt="" />
-              <a class="text-white ms-2" href="tel:+998901237590"
-                >+998 90 1237590</a
-              >
+              <a class="text-white ms-2" href="tel:+998901237590">+998 90 1237590</a>
             </p>
 
             <p class="contactData">
               <img src="@/assets/contact/email.png" alt="" />
-              <a class="text-white ms-2" href="mailto: salom@kytab.uz"
-                >salom@kytab.uz</a
-              >
+              <a class="text-white ms-2" href="mailto: salom@kytab.uz">salom@kytab.uz</a>
             </p>
             <p class="contactData">
               <img src="../assets/contact/lacatsi.png" alt="" class="me-1" />
@@ -99,9 +86,7 @@
             </p>
           </div>
         </div>
-        <div
-          class="col-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex justify-content-end"
-        >
+        <div class="col-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex justify-content-end">
           <div class="tiny-footer">{{ $t('footer.developer') }}</div>
         </div>
       </div>
@@ -125,6 +110,7 @@
   padding-bottom: 20px;
   font-weight: bold;
 }
+
 .footer-title .footerLogo {
   border-radius: 50%;
 }
@@ -141,10 +127,12 @@
     }
   }
 }
+
 .contactData {
   font-size: 15px !important;
   margin-bottom: 20px;
 }
+
 .tiny-footer {
   font-size: 14px;
   font-weight: 400;

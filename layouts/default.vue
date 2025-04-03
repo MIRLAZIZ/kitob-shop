@@ -1,14 +1,12 @@
 <template>
-  <div id="app">
     <div class="main-content">
-      <!-- <SeoKit /> -->
       <Header />
-
       <slot />
-
-      <!-- <Newsletter v-if="route.path != '/contact'" /> -->
       <Footer />
     </div>
+
+
+
     <div class="second-content">
       <div class="box">
         <h1 class="disclaimer">
@@ -16,9 +14,8 @@
           mavjud emas.
         </h1>
       </div>
-      <MobileApp/>
+      <MobileApp />
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -68,10 +65,12 @@ useHead({
   display: none;
 }
 
+
 @media (max-width: 900px) {
   .main-content {
     display: none;
   }
+
   .second-content {
     display: flex;
     flex-direction: column;

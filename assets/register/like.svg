@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                id="dataCursor">
+                <path
+                  d="M18.4545 7.36364C18.4545 4.95394 16.4192 3 13.9086 3C12.0322 3 10.4206 4.09188 9.72727 5.65018C9.03394 4.09188 7.4223 3 5.54497 3C3.03636 3 1 4.95394 1 7.36364C1 14.3648 9.72727 19 9.72727 19C9.72727 19 18.4545 14.3648 18.4545 7.36364Z"
+                  stroke="#35363D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>

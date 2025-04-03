@@ -28,72 +28,6 @@ let bookcontent = ref(1);
 
 
 
-
-// order item 
-// const ordrItem = () => {
-//   let type = null
-
-//   if (bookPrice.value) {
-//     if (store.book?.type) {
-//       type = "book"
-//     } else {
-//       type = "other"
-//     }
-
-
-
-
-//   let orderdata = {
-//       booktype: bookType.value,
-//     };
-
-
-
-//     let Book = [{
-//       bookTypeId: orderdata.booktype,
-//       productId: route.params.id,
-//       quantity: 1,
-//       productType: type
-
-//     }]
-
-
-//     let Productdata = JSON.stringify(Book);
-//     localStorage.setItem('Product', Productdata)
-
-
-
-//     router.push("/OrderItem");
-//   } else {
-
-//     const userType = localStorage.getItem("type");
-
-
-//     if (userType == "guest") {
-//       useNuxtApp().$toast.error('Iltimos, ro\'yhatdan o\'ting', {
-//         autoClose: 4000,
-//         dangerouslyHTMLString: true,
-//       });
-
-
-//     } else {
-//       let booktype = {
-//         book_type_id: bookType.value,
-//       }
-
-//       if (book)
-//         store.AddBook(booktype)
-//           .then(() => {
-//             alert("Sizning profilingizda ma'lumot saqaldi");
-
-//           })
-//     }
-
-//   }
-// };
-
-
-
 const ordrItem = () => {
   if (!bookPrice.value) {
     const userType = localStorage.getItem("type");
@@ -116,9 +50,19 @@ const ordrItem = () => {
 
 
   let bookData = store.book?.type.filter(item => item.id == bookType.value)
+  
 
   if (type == 'book') {
-    localStorage.setItem('bookData', JSON.stringify(bookData))
+
+
+    let databook = {
+    bookCount: 1,
+    totalPrice: bookData[0].price,
+    type: bookData[0].type ==='paper' ?  true : false 
+  }
+
+  localStorage.setItem('bookData', JSON.stringify(databook))
+
     const Book = [
       {
         bookTypeId: bookType.value,
@@ -139,132 +83,134 @@ const ordrItem = () => {
 
 
 
-  const fetchBookOne = () => {
-    refresh();
-  };
+const fetchBookOne = () => {
+  refresh();
+};
 
 
 
-  const refresh = async () => {
+const refresh = async () => {
 
-    await store
-      .fetch_book_one(route.params.id)
-      .then(() => {
-        comentsData.value = [...store.book.reviews, ...store.book.shop_reviews];
+  await store
+    .fetch_book_one(route.params.id)
+    .then(() => {
+      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews];
 
-        let elementLength = comentsData.value.length;
-
-
-        let sum = 0;
-        if (store.book) {
-          comentsData.value.forEach((element) => {
+      let elementLength = comentsData.value.length;
 
 
-            let ratingData = element.rating;
-            sum += ratingData;
-          });
-          ratings.value = sum / elementLength || 0;
-          comitCount.value = elementLength;
-        }
+      let sum = 0;
+      if (store.book) {
+        comentsData.value.forEach((element) => {
 
 
-        if (store.book && store.book.type) {
-          store.book.type.forEach((item) => {
-            type.value.push(item.type);
-
-            if (item.type) {
-              is_book.value = true;
-            }
-          });
-        }
-      })
-      .catch((error) => {
-        storeNotfy.errorData(error.response._data.errors)
-      });
-  };
+          let ratingData = element.rating;
+          sum += ratingData;
+        });
+        ratings.value = sum / elementLength || 0;
+        comitCount.value = elementLength;
+      }
 
 
-  const basketAdd = (id, type) => {
-    storeBasket
-      .basketAdd({ product_id: id, type: type.length ? "book" : "product" })
-      .then(() => {
-        storeNotfy.succesToast('Savatchaga qoshildi')
-      }).catch(error => {
-        storeNotfy.errorData(error.response._data.errors)
-      })
-  };
+      if (store.book && store.book.type) {
+        store.book.type.forEach((item) => {
+          type.value.push(item.type);
 
-
-
-  const addFavourite = (id, bookId) => {
-
-    store.book.favorite = !store.book.favorite;
-
-    if (store.book.favorite) {
-      storeBasket.addFavourite({
-        product_id: id,
-        type: bookId.length ? "book" : "product",
-      });
-    } else {
-      const type = bookId.length ? "book" : "product";
-      storeBasket.favouriteDelete(id, type);
-    }
-  };
-
-  onMounted(() => {
-    refresh().then(() => {
-      bookTypeadd(
-        store.book?.type[0]?.id,
-        store.book?.type[0]?.price,
-        store.book?.type[0]?.file_fragment,
-        store.book?.type[0]?.type
-      );
+          if (item.type) {
+            is_book.value = true;
+          }
+        });
+      }
+    })
+    .catch((error) => {
+      storeNotfy.errorData(error.response._data.errors)
     });
-    store.Popular_recent()
+};
 
+
+const basketAdd = (id, type) => {
+  storeBasket
+    .basketAdd({ product_id: id, type: type.length ? "book" : "product" })
+    .then(() => {
+      storeNotfy.succesToast('Savatchaga qoshildi')
+    }).catch(error => {
+      storeNotfy.errorData(error.response._data.errors)
+    })
+};
+
+
+
+const addFavourite = (id, bookId) => {
+
+  store.book.favorite = !store.book.favorite;
+
+  if (store.book.favorite) {
+    storeBasket.addFavourite({
+      product_id: id,
+      type: bookId.length ? "book" : "product",
+    });
+  } else {
+    const type = bookId.length ? "book" : "product";
+    storeBasket.favouriteDelete(id, type);
+  }
+};
+
+onMounted(() => {
+  refresh().then(() => {
+    bookTypeadd(
+      store.book?.type[0]?.id,
+      store.book?.type[0]?.price,
+      store.book?.type[0]?.file_fragment,
+      store.book?.type[0]?.type
+    );
   });
+  store.Popular_recent()
+
+});
 
 
 
 
 
 
-  const bookTypeadd = (id, price, file, type) => {
+const bookTypeadd = (id, price, file, type) => {
 
-    bookType.value = id;
-    bookPrice.value = price;
-    file_fragment.value = file;
-    file_type.value = type;
-
-
-    if (type == "audio" && file) {
-
-      reading.value = 2;
-    } else if ((type == "paper" || type == "ebook") && file) {
-
-      reading.value = 1;
-    }
-  };
+  bookType.value = id;
+  bookPrice.value = price;
+  file_fragment.value = file;
+  file_type.value = type;
 
 
+  if (type == "audio" && file) {
 
-  const fragment = () => {
-    let data = JSON.stringify(file_fragment.value)
-    if (process.client) {
-      localStorage.setItem('epubUrl', data)
+    reading.value = 2;
+  } else if ((type == "paper" || type == "ebook") && file) {
 
-    }
-    router.push('/reading')
+    reading.value = 1;
   }
+};
 
 
 
+const fragment = () => {
+  let data = JSON.stringify(file_fragment.value)
+  if (process.client) {
+    localStorage.setItem('epubUrl', data)
 
-  const audio_fragment = () => {
-    // let data = JSON.stringify(file_fragment.value)
-    localStorage.setItem('audio_fragment', file_fragment.value)
-    router.push('/audio')
   }
+  router.push('/reading')
+}
+
+
+
+
+const audio_fragment = () => {
+  // let data = JSON.stringify(file_fragment.value)
+  console.log(file_fragment.value);
+  
+  localStorage.setItem('audio_fragment', file_fragment.value)
+  router.push('/audio')
+}
 
 
 </script>
@@ -277,8 +223,7 @@ const ordrItem = () => {
       <small class="mt-5 " style="cursor: pointer;">
 
         <span @click="router.push('/')">
-          Bosh sahifa
-
+          {{ $t('home.profile.Homepage') }}
         </span>
         <span v-if="store.book && store.book.category.length"
           @click="router.push(`/Categories/${store.book?.category[0]?.id}`)">/{{
@@ -325,7 +270,7 @@ const ordrItem = () => {
 
 
             <!-- copy img -->
-            <img src="../../assets/contact/download.png" alt="" @click="copyLink" />
+            <img src="/assets/contact/download.png" alt="" @click="copyLink" />
           </div>
         </div>
 
@@ -344,8 +289,12 @@ const ordrItem = () => {
         <div>
           <span class="statCount">{{ $t("home.cost") }}:</span>
           <div class="mb-3">
+
+            <!-- <pre>
+              {{ store.book }} 
+            </pre> -->
             <span class="bookPrice">{{ bookPrice }}{{ $t("home.basket.sum") }}</span>
-            <small class="discount ms-3"><del>185 000 {{ $t("home.basket.sum") }}</del></small>
+            <!-- <small class="discount ms-3"><del>185 000  {{ $t("home.basket.sum") }}</del></small> -->
           </div>
         </div>
         <div class="row">
@@ -365,7 +314,8 @@ const ordrItem = () => {
               <div class="col-6" :style="{ cursor: reading !== 1 ? 'no-drop' : 'auto', }">
 
 
-                <button @click="fragment" :disabled="reading !== 1" class="btn border w-100 fragment">
+                <button @click="fragment" :disabled="reading !== 1" class="btn border w-100 fragment"
+                  :style="{ cursor: reading !== 2 ? 'no-drop' : 'auto', }">
                   <img src="@/assets/contact/book-open2.png" alt="" />{{
                     $t("home.reading")
                   }}
@@ -373,13 +323,16 @@ const ordrItem = () => {
 
 
               </div>
+
               <div class="col-6" :style="{ cursor: reading !== 2 ? 'no-drop' : 'auto', }">
-                <button @click="audio_fragment" style="display:flex; align-items:center; justify-content:center;"
-                  :disabled="reading !== 2" :style="{ cursor: reading !== 2 ? 'no-drop' : 'auto', }"
-                  class="btn border w-100 fragment">
+                <button @click="audio_fragment" :disabled="reading !== 2"
+                  :style="{ cursor: reading !== 2 ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
+
                   <img src="@/assets/contact/headphones2.png" style="margin-right: 5px;" alt="" />{{
                     $t("home.audio")
                   }}
+
+
                 </button>
               </div>
 
@@ -396,7 +349,7 @@ const ordrItem = () => {
 
 
             <button class="w-100 buy mt-2" @click="ordrItem">
-              {{ bookPrice ? $t("home.quickBuy") : "Yuklab olish" }}
+              {{ bookPrice ? $t("home.quickBuy") : $t('order.download') }}
             </button>
           </div>
         </div>
@@ -435,8 +388,10 @@ const ordrItem = () => {
       <div v-show="bookcontent == 1">
         <BookAbaut />
       </div>
-      <div v-show="bookcontent == 2">
-        <h1>ma'lumot yo'q</h1>
+
+
+      <div v-show="bookcontent == 2" class="p-4">
+        <h1>{{ $t('order.no_information') }}</h1>
       </div>
 
       <div class="comments" v-if="bookcontent == 3">
@@ -445,13 +400,9 @@ const ordrItem = () => {
       </div>
     </div>
 
-    <div class="mt-5 mb-5">
+
+    <div class="mt-5 mb-5" v-if="store?.recent?.length">
       <HomeMarketFast :bookImgs="store.recent" :title="$t('home.recently')" />
-
-
-
-
-
     </div>
 
 
@@ -516,7 +467,6 @@ const ordrItem = () => {
 .fragment {
   font-size: 15px;
   background: #f0f0f0;
-  height: 46px;
 }
 
 .basket {

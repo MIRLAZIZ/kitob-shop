@@ -3,22 +3,12 @@
     <div class="container px-0 mt-5">
       <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-          <h4 class="bestText">{{ title }}</h4>
-          <svg
-            class="mt-1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M7 4L13 10L7 16"
-              stroke="#35363D"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+          <h4 class="bestText">{{ $t(title) }}</h4>
+          <!-- <pre>  {{ props.bookImgs[0]?.type }}</pre> -->
+
+          <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7 4L13 10L7 16" stroke="#35363D" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
         </div>
         <div>
@@ -30,70 +20,55 @@
           </button>
         </div>
       </div>
-      
+
       <div class="book-carousel-container">
-        <swiper-container 
-          ref="containerRef"
-          :slides-per-view="6"
-          :space-between="10"
-          :pagination="true"
-        
-     
-          :autoplay="{
-            delay: props.swiperDley || 6000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true 
-          }"
-          class="book-swiper"
-        >
-          <swiper-slide
-            v-for="(item, idx) in props.bookImgs"
-            :key="idx"
-            class="book-slide"
-          >
+        <swiper-container ref="containerRef" :autoplay="{
+          delay: 900000 || 6000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        }" :slides-per-view="6" :space-between="10" :pagination="true" class="book-swiper">
+          <swiper-slide v-for="(item, idx) in props.bookImgs" :key="idx" class="book-slide">
             <div @click="$router.push(`/book/${item.id}`)" class="bookData">
               <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
-              <button
-                :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'"
-              >
+              <button :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'">
                 {{ item.is_bestseller == 1 ? "Bestseller" : "Yangi" }}
               </button>
-              <div
-                class="likeBox"
-                @click="addFavourite($event, idx, item.id, item.type.book_id)"
-              >
-                <img
-                  src="../../assets/contact/bookLike2.png"
-                  alt=""
-                  class="bookLike2"
-                  :style="{ opacity: item.is_favorite ? '1' : '0' }"
-                />
-                <img
-                  src="../../assets/contact/booklike.png"
-                  alt=""
-                  class="bookLike"
-                  :style="{ opacity: item.is_favorite ? '0' : '1' }"
-                />
+              <div class="likeBox" @click="addFavourite($event, idx, item.id, item.type.book_id)">
+                <img src="/assets/contact/bookLike2.png" alt="" class="bookLike2"
+                  :style="{ opacity: item.is_favorite ? '1' : '0' }" />
+                <img src="/assets/contact/booklike.png" alt="" class="bookLike"
+                  :style="{ opacity: item.is_favorite ? '0' : '1' }" />
               </div>
-              <img
-                src="../../assets/contact/karzinka.png"
-                alt=""
-                class="karzinka"
-                @click="addBasket($event, item.id, item.type.book_id)"
-              />
-              <div class="wrapper-icons">
-                <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-                <img
-                  src="../../assets/contact/bookopen.png"
-                  alt=""
-                  class="bookopen"
-                />
-                <img
-                  src="../../assets/contact/headphone.png"
-                  alt=""
-                  class="headphone"
-                />
-              </div>
+
+
+
+              <img src="/assets/contact/karzinka.png" alt="" class="karzinka"
+                @click="addBasket($event, item.id, item.type.book_id)" />
+
+
+              <!-- <div class="wrapper-icons border border-danger" v-for="(fragment, idx) in item.type" :key="idx">
+
+                <div v-show="fragment?.type == 'ebook'">
+                  <img src="/assets/contact/eBook.png" alt="" class="ebook" 
+                    @click.stop="readingLInk(fragment.file_fragment)" />
+                </div>
+
+
+                <div v-show="fragment?.type == 'paper'">
+                  <img src="/assets/contact/bookopen.png" alt="" class="bookopen"
+                    @click.stop="readingLInk(fragment.file_fragment)" />
+                </div>
+
+
+
+                <div v-show="fragment?.type == 'audio'">
+                  <img src="/assets/contact/headphone.png" alt="" class="headphone"
+                    @click.stop="readingAudio(fragment.file_fragment)" />
+                </div>
+
+
+
+              </div> -->
             </div>
             <div class="ps-2">
               <small class="title">{{ item.creator }}</small>
@@ -104,6 +79,7 @@
             </div>
             <small class="stats ms-2">5,0</small>
             <span class="starsNumbers">(32)</span>
+
           </swiper-slide>
         </swiper-container>
       </div>
@@ -118,6 +94,7 @@ import { useRuntimeConfig } from "nuxt/app";
 const store = useBasketStore();
 const urlimg = useRuntimeConfig().public.bookUrl;
 const containerRef = ref(null);
+const router = useRouter()
 
 const props = defineProps({
   title: String,
@@ -127,7 +104,23 @@ const props = defineProps({
     default: () => [],
   },
 });
- 
+
+
+
+const readingLInk = (item) => {
+  let data = JSON.stringify(item)
+  localStorage.setItem('epubUrl', data)
+  router.push('/reading')
+}
+
+
+
+const readingAudio = (item) => {
+  let data = JSON.stringify(item)
+  localStorage.setItem('epubUrl', data)
+  router.push('/audio')
+}
+
 
 const swiper = ref(null);
 const loopEnabled = ref(false);
@@ -140,15 +133,15 @@ onMounted(() => {
   if (containerRef.value) {
     // Access the Swiper instance after the component is mounted
     swiper.value = containerRef.value.swiper;
-    
-    
+
+
     // Set width for slides programmatically if needed
     if (swiper.value) {
       const slideElements = containerRef.value.querySelectorAll('.book-slide');
       slideElements.forEach((slide) => {
         slide.style.width = '190px';
       });
-      
+
       // Make sure autoplay is enabled
       if (swiper.value.autoplay && typeof swiper.value.autoplay.start === 'function') {
         swiper.value.autoplay.start();
@@ -171,7 +164,7 @@ const addFavourite = (e, idx, id, bookId) => {
   if (props.bookImgs[idx]) {
     props.bookImgs[idx].is_favorite = !props.bookImgs[idx].is_favorite;
   }
-  
+
   if (props.bookImgs[idx].is_favorite) {
     store.addFavourite({
       product_id: id,
@@ -209,7 +202,8 @@ const notify = () => {
 }
 
 .book-slide {
-  width: 190px !important; /* Force exact width */
+  width: 190px !important;
+  /* Force exact width */
   height: 320px;
   flex-shrink: 0;
 }
@@ -220,7 +214,8 @@ const notify = () => {
   width: 100%;
 }
 
-.bookLike, .bookLike2 {
+.bookLike,
+.bookLike2 {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -238,13 +233,15 @@ const notify = () => {
 
 .wrapper-icons {
   position: absolute;
-  display: flex;
-  gap: 5px;
+  /* display: flex; */
+  /* gap: 5px; */
   right: 0.625rem;
   bottom: 0.625rem;
 }
 
-.ebook, .bookopen, .headphone {
+.ebook,
+.bookopen,
+.headphone {
   cursor: pointer;
   display: none;
 }

@@ -134,7 +134,8 @@
       "New Password":"Yangi parol",
       "Electronic book":"Elektron kitob",
       "Audio book":"Audio kitob",
-      "There are no new notifications":"Yangi bildirishnoma yo’q"
+      "There are no new notifications":"Yangi bildirishnoma yo’q",
+      "login": "Kirish"
     }
   },
   "footer": {
@@ -175,7 +176,29 @@
     "registred": "Avval ro'yhatdan o'tganmisiz?",
     "sign_up": "Ro'yxatdan o'tish",
     "required_field": "Bo'sh  maydonlarni to'ldiring!",
-    "successful": "Muvaffaqiyatli"
+    "successful": "Muvaffaqiyatli",
+    "password_recovery": "Parolni tiklash",
+    "continue": "Davom etish",
+    "new_password":"Yangi parolni o'rnatish",
+    "confirmation_code": "Tasdiqlash kodi:",
+    "sent_phone_number": "telefon raqamga yubordik",
+    "resubmit_code": "Kodni takroran yuborish",
+    "resend_seconds": "soniya dan so'ng takroran yuborish",
+    "catalog": "Katalog",
+    "best_seller": "Bozori chaqqon",
+    "celebrities": "Mashhurlar",
+    "special_offers": "Maxsus takliflar",
+    "looking_book": "Kitob izlash...",
+    "search_history": "Qidiruv tarixi",
+    "popular_searches": "Mashhur qidiruvlar",
+    "download": "Yuklab olish",
+    "no_information": "Ma'lumot yo'q",
+    "fovorite_books": "Sevimli kitoblaringiz shu yerda bo'ladi.",
+    "see_section": "bo'limiga qarang",
+    "Cart_empty": "Savatcha bo'sh"
+
+
+
 
 
 

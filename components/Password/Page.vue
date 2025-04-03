@@ -11,7 +11,7 @@
 
 
     <div class="col px-5 py-4">
-
+ 
       <div class="d-flex justify-content-end">
         <Locales />
 
@@ -21,8 +21,8 @@
 
       <div>
         <div class="">
-          <h3>Parolni tiklash</h3>
-          <small>Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling</small>
+          <h3>{{ $t('order.password_recovery') }}</h3>
+          <small>{{ $t('order.access_books') }}</small>
         </div>
 
 
@@ -32,8 +32,7 @@
 
             <FormaPhoneField v-model="telNumber" :title="'home.phone'" ref="telNumberref" />
     
-          <button @click="senDataUser1" class="mt-3">Davom etish</button>
-
+          <button @click="senDataUser1" class="mt-3">{{ $t('order.continue') }}</button>
         </div>
 
 
@@ -43,9 +42,8 @@
          
 
 
-            <label for="email" class="form-label">Tasdiqlash kodi: <span class="mx-1">{{
-              formatPhoneNumber(userPhoneData?.phone) }} </span> telefon raqamga
-              yubordik </label>
+            <label for="email" class="form-label">{{ $t('order.confirmation_code') }} <span class="mx-1">{{
+              formatPhoneNumber(userPhoneData?.phone) }} </span> {{ $t('order.sent_phone_number') }}</label>
 
 
             <FormaSmsCode v-model="code" />
@@ -55,9 +53,9 @@
             </div>
 
             <div class="mt-2">
-              <p v-if="isCounting"> {{ time }} soniya dan so’ng takroran yuborish
+              <p v-if="isCounting"> {{ time }} {{ $t('order.resend_seconds') }}
               </p>
-              <p @click="senDataUser1" class="codeAgain" v-else>Ko’dni takroran yuborish</p>
+              <p @click="senDataUser1" class="codeAgain" v-else>{{ $t('order.resubmit_code') }}</p>
             </div>
 
 
@@ -80,7 +78,7 @@
               ref="confirmPasswordref" class="my-3" />
 
         
-          <button @click="senDataUser3">Yangi parolni o'rnatish</button>
+          <button @click="senDataUser3">{{ $t('order.new_password') }}</button>
 
         </div>
 
@@ -88,8 +86,8 @@
 
        <div  class="mt-2">
          <small>
-           Avval ro'yhatdan o'tganmisiz?
-           <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
+          {{ $t('order.registred') }}
+           <NuxtLink to="/register">{{ $t('order.sign_up') }}</NuxtLink>
          </small>
        </div>
       </div>
@@ -122,7 +120,7 @@ const generatepasword = ref({
   confirm_password: null,
 });
 
-let content = ref(3);
+let content = ref(1);
 
 
 const validatsiyaArray = ref([])
