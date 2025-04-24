@@ -97,7 +97,10 @@
             <span class="ms-1 forFont" v-if="userType && userType == 'guest'">{{ $t("home.profile.login") }}</span>
             <span v-else> {{userData?.full_name.split(' ')[1] ? userData?.full_name.split(' ')[1] : userData?.full_name.split(' ')[0] }}</span>
 
-          </div> 
+          </div>  
+
+
+          
 
         </div>
 
